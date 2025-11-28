@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanx - Automação Inteligente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff7a01;
+            --primary-dark: #e66d00;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border: rgba(255, 122, 1, 0.2);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 122, 1, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 10px 20px 20px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-container {
+            text-align: center;
+            padding: 15px 0 10px 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-container img {
+            max-width: 180px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(255, 122, 1, 0.3));
+        }
+
+        .progress-container {
+            margin: 20px 0 25px 0;
+            padding: 0 10px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #ffaa00);
+            border-radius: 10px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px rgba(255, 122, 1, 0.5);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 50px 40px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255, 122, 1, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-title {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 35px;
+            color: var(--text);
+            position: relative;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            background: rgba(255, 122, 1, 0.05);
+            box-shadow: 0 0 0 3px rgba(255, 122, 1, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .option-btn {
+            width: 100%;
+            padding: 18px 24px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 122, 1, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: rgba(255, 122, 1, 0.08);
+            transform: translateX(5px);
+        }
+
+        .option-btn:hover::before {
+            left: 100%;
+        }
+
+        .option-btn.selected {
+            background: rgba(255, 122, 1, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(255, 122, 1, 0.2);
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-option:hover {
+            border-color: var(--primary);
+            background: rgba(255, 122, 1, 0.05);
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .checkbox-option.checked {
+            background: rgba(255, 122, 1, 0.1);
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 18px 32px;
+            background: linear-gradient(135deg, var(--primary), #ffaa00);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 122, 1, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255, 122, 1, 0.4);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 18px 32px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(255, 122, 1, 0.05);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-back,
+        .btn-next {
+            flex: 1;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--primary), #ffaa00);
+            border: none;
+            color: white;
+            box-shadow: 0 8px 20px rgba(255, 122, 1, 0.3);
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 122, 1, 0.4);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .admin-panel {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .admin-section {
+            margin-bottom: 25px;
+        }
+
+        .admin-section h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .phone-hint {
+            display: none;
+            margin-top: 8px;
+            padding: 12px;
+            background: rgba(255, 122, 1, 0.1);
+            border-left: 3px solid var(--primary);
+            border-radius: 6px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            animation: slideDown 0.3s ease;
+        }
+
+        .phone-hint.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .final-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .final-message h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .final-message p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 8px 15px 15px 15px;
+            }
+
+            .card {
+                padding: 35px 25px;
+                border-radius: 20px;
+            }
+
+            .question-title {
+                font-size: 24px;
+                margin-bottom: 25px;
+            }
+
+            .option-btn,
+            .btn-primary,
+            .btn-secondary {
+                padding: 16px 20px;
+                font-size: 15px;
+            }
+
+            .logo-container {
+                padding: 12px 0 8px 0;
+            }
+
+            .logo-container img {
+                max-width: 140px;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .question-title {
+                font-size: 20px;
+            }
+
+            .card {
+                padding: 30px 20px;
+            }
+
+            .logo-container {
+                padding: 10px 0 6px 0;
+            }
+
+            .logo-container img {
+                max-width: 130px;
+            }
+
+            .progress-container {
+                margin: 15px 0 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container" onclick="checkAdminAccess()">
+            <img src="https://advfunnel.com.br/wp-content/uploads/2025/06/Advfunnel-PNG-Black.webp" alt="Advanx Logo">
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-text">
+                <span id="currentStep">Etapa 1 de 13</span>
+                <span id="progressPercent">8%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 8%"></div>
+            </div>
+        </div>
+
+        <div class="card" id="quizCard">
+            <!-- Step 1 -->
+            <div class="step" id="step1">
+                <h1 class="question-title">Vamos automatizar sua operação em até 87 dias, desde a captação até o operacional, economizando pelo menos 40% com despesas fixas.</h1>
+                <button class="btn-primary" onclick="nextStep()">Vamos começar!</button>
+                <button class="btn-secondary" onclick="endQuiz('not_ready')">Ainda não é o meu momento</button>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step hidden" id="step2">
+                <h2 class="question-title">Você já usa alguma automação?</h2>
+                <button class="option-btn" onclick="selectOption(this, 'usa_automacao', 'sim'); showTextField('automacao_atual')">Sim</button>
+                <div id="automacao_atual_field" class="input-group hidden" style="margin-top: 20px;">
+                    <input type="text" id="automacao_atual" placeholder="Qual automação você usa atualmente?">
+                </div>
+                <button class="option-btn" onclick="selectOption(this, 'usa_automacao', 'nao')">Ainda não</button>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                    <button class="btn-next" onclick="nextStep()" id="step2Next">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step hidden" id="step3">
+                <h2 class="question-title">Você já sabe o que deseja automatizar por aí?</h2>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="opt_prospeccao" value="Prospecção ativa" onchange="updateCheckboxes()">
+                    <label for="opt_prospeccao">Prospecção ativa</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="opt_disparos" value="Disparos" onchange="updateCheckboxes()">
+                    <label for="opt_disparos">Disparos</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="opt_sdr" value="SDR" onchange="updateCheckboxes()">
+                    <label for="opt_sdr">SDR</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="opt_bdr" value="BDR" onchange="updateCheckboxes()">
+                    <label for="opt_bdr">BDR</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="opt_atendimento" value="Atendimento" onchange="updateCheckboxes()">
+                    <label for="opt_atendimento">Atendimento</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="opt_vendas" value="Vendas" onchange="updateCheckboxes()">
+                    <label for="opt_vendas">Vendas</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="opt_sistema" value="Sistema próprio" onchange="updateCheckboxes()">
+                    <label for="opt_sistema">Sistema próprio</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="opt_erps" value="ERPs" onchange="updateCheckboxes()">
+                    <label for="opt_erps">ERPs</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="opt_gestao" value="Gestão" onchange="updateCheckboxes()">
+                    <label for="opt_gestao">Gestão</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="opt_outros" value="Outros" onchange="toggleOutrosField()">
+                    <label for="opt_outros">Outros</label>
+                </div>
+                <div id="outros_field" class="input-group hidden" style="margin-top: 15px;">
+                    <label class="input-label">Explique seu projeto</label>
+                    <textarea id="outros_detalhes" placeholder="Conte-nos sobre o que você deseja automatizar..."></textarea>
+                </div>
+                <div class="checkbox-option" style="margin-top: 15px;">
+                    <input type="checkbox" id="opt_explicar_ideia" value="Quero explicar minha ideia" onchange="toggleExplicarIdeiaField()">
+                    <label for="opt_explicar_ideia">Quero explicar minha ideia</label>
+                </div>
+                <div id="explicar_ideia_field" class="input-group hidden" style="margin-top: 15px;">
+                    <label class="input-label">Me conta um pouco mais sobre a sua ideia</label>
+                    <textarea id="detalhes_automacao" placeholder="Descreva aqui..."></textarea>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                    <button class="btn-next" onclick="nextStep()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step hidden" id="step4">
+                <h2 class="question-title">Qual sua principal área de atuação?</h2>
+                <div class="input-group">
+                    <label class="input-label">Área de atuação</label>
+                    <input type="text" id="area_atuacao" placeholder="Ex: Advocacia, Consultoria, E-commerce...">
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                    <button class="btn-next" onclick="nextStep()" id="step4Next">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step hidden" id="step5">
+                <h2 class="question-title">Me fala o que faz mais sentido para você</h2>
+                <button class="option-btn" onclick="selectOption(this, 'modelo_negocio', 'proprio')">Quero algo para chamar de meu, sem mensalidades</button>
+                <button class="option-btn" onclick="selectOption(this, 'modelo_negocio', 'assinatura')">Prefiro assinatura</button>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                    <button class="btn-next" onclick="nextStep()" id="step5Next">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="step hidden" id="step6">
+                <h2 class="question-title">Você está ciente que para ter nosso atendimento você vai precisar participar de uma videochamada ou ligação de até 30 min?</h2>
+                <button class="option-btn" onclick="selectOption(this, 'disponibilidade', 'sim'); nextStep()">Entendo e concordo!</button>
+                <button class="option-btn" onclick="endQuiz('no_time')">Não tenho tempo para isso</button>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                </div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="step hidden" id="step7">
+                <h2 class="question-title">Por sinal, qual é o seu nome?</h2>
+                <div class="input-group">
+                    <label class="input-label">Nome completo</label>
+                    <input type="text" id="nome_completo" placeholder="Digite seu nome completo">
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                    <button class="btn-next" onclick="nextStep()" id="step7Next">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Step 8 -->
+            <div class="step hidden" id="step8">
+                <h2 class="question-title">Qual o nome do negócio?</h2>
+                <div class="input-group">
+                    <label class="input-label">Nome da empresa</label>
+                    <input type="text" id="nome_empresa" placeholder="Digite o nome da sua empresa">
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                    <button class="btn-next" onclick="nextStep()" id="step8Next">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Step 9 -->
+            <div class="step hidden" id="step9">
+                <h2 class="question-title">Qual o Instagram?</h2>
+                <div class="input-group">
+                    <label class="input-label">Instagram</label>
+                    <input type="text" id="instagram" placeholder="@seuinstagram">
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                    <button class="btn-next" onclick="nextStep()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Step 10 -->
+            <div class="step hidden" id="step10">
+                <h2 class="question-title">Quantos colaboradores você tem?</h2>
+                <button class="option-btn" onclick="selectOption(this, 'colaboradores', 'apenas_eu')">Apenas eu</button>
+                <button class="option-btn" onclick="selectOption(this, 'colaboradores', '1_a_3')">1 a 3</button>
+                <button class="option-btn" onclick="selectOption(this, 'colaboradores', '3_a_6')">3 a 6</button>
+                <button class="option-btn" onclick="selectOption(this, 'colaboradores', '6_a_12')">6 a 12</button>
+                <button class="option-btn" onclick="selectOption(this, 'colaboradores', 'mais_de_12')">Mais de 12</button>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                    <button class="btn-next" onclick="nextStep()" id="step10Next">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Step 11 -->
+            <div class="step hidden" id="step11">
+                <h2 class="question-title">Qual o faturamento médio mensal?</h2>
+                <button class="option-btn" onclick="selectOption(this, 'faturamento', '0_a_5k')">0 a 5 mil reais</button>
+                <button class="option-btn" onclick="selectOption(this, 'faturamento', '5_a_10k')">5 a 10 mil reais</button>
+                <button class="option-btn" onclick="selectOption(this, 'faturamento', '10_a_20k')">10 a 20 mil reais</button>
+                <button class="option-btn" onclick="selectOption(this, 'faturamento', '20_a_50k')">20 a 50 mil reais</button>
+                <button class="option-btn" onclick="selectOption(this, 'faturamento', '50_a_100k')">50 a 100 mil reais</button>
+                <button class="option-btn" onclick="selectOption(this, 'faturamento', 'mais_de_100k')">Mais de 100 mil reais</button>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                    <button class="btn-next" onclick="nextStep()" id="step11Next">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Step 12 -->
+            <div class="step hidden" id="step12">
+                <h2 class="question-title">Estamos no final, qual o WhatsApp pessoal?</h2>
+                <div class="input-group">
+                    <label class="input-label">WhatsApp</label>
+                    <input type="tel" id="whatsapp" placeholder="(71) 99289-4634" maxlength="15">
+                    <div class="phone-hint" id="phoneHint">
+                        ✓ Por favor, confira se o número está correto: <strong id="phoneDisplay"></strong>
+                    </div>
+                    <div class="error-message" id="phoneError">Por favor, insira um número válido com DDD</div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                    <button class="btn-next" onclick="nextStep()" id="step12Next">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Step 13 -->
+            <div class="step hidden" id="step13">
+                <h2 class="question-title">Qual o melhor email?</h2>
+                <div class="input-group">
+                    <label class="input-label">Email</label>
+                    <input type="email" id="email" placeholder="seu@email.com">
+                    <div class="error-message" id="emailError">Por favor, insira um email válido</div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn-back" onclick="prevStep()">← Voltar</button>
+                    <button class="btn-next" onclick="submitForm()">Finalizar →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 13;
+        let formData = {};
+        let adminMode = false;
+        let config = {
+            webhook: 'https://n8n.advfunnel.com.br/webhook/cb33d994-f6ab-446a-9ba7-fc6f4fd24e0e/:ADVFUNNEL',
+            redirectUrl: '',
+            metaPixel: '',
+            googleAds: '',
+            ga4: '',
+            gtm: ''
+        };
+
+        // Captura UTMs da URL ao carregar a página
+        function captureUTMs() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const utms = {
+                utm_source: urlParams.get('utm_source') || '',
+                utm_medium: urlParams.get('utm_medium') || '',
+                utm_campaign: urlParams.get('utm_campaign') || '',
+                utm_term: urlParams.get('utm_term') || '',
+                utm_content: urlParams.get('utm_content') || '',
+                utm_id: urlParams.get('utm_id') || '',
+                gclid: urlParams.get('gclid') || '', // Google Ads Click ID
+                fbclid: urlParams.get('fbclid') || '', // Facebook Click ID
+                referrer: document.referrer || ''
+            };
+            
+            // Remove campos vazios
+            Object.keys(utms).forEach(key => {
+                if (utms[key]) {
+                    formData[key] = utms[key];
+                }
+            });
+            
+            // Salva no localStorage para persistir entre páginas
+            localStorage.setItem('quiz_utms', JSON.stringify(utms));
+        }
+
+        // Executa captura ao carregar
+        captureUTMs();
+
+        function updateProgress() {
+            const percent = Math.round((currentStep / totalSteps) * 100);
+            document.getElementById('currentStep').textContent = `Etapa ${currentStep} de ${totalSteps}`;
+            document.getElementById('progressPercent').textContent = `${percent}%`;
+            document.getElementById('progressFill').style.width = `${percent}%`;
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`step${step}`).classList.remove('hidden');
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextStep() {
+            if (validateStep(currentStep)) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function validateStep(step) {
+            switch(step) {
+                case 2:
+                    return formData.usa_automacao !== undefined;
+                case 4:
+                    const area = document.getElementById('area_atuacao').value.trim();
+                    if (!area) {
+                        alert('Por favor, preencha sua área de atuação');
+                        return false;
+                    }
+                    formData.area_atuacao = area;
+                    return true;
+                case 5:
+                    return formData.modelo_negocio !== undefined;
+                case 7:
+                    const nome = document.getElementById('nome_completo').value.trim();
+                    if (!nome) {
+                        alert('Por favor, preencha seu nome');
+                        return false;
+                    }
+                    formData.nome_completo = nome;
+                    return true;
+                case 8:
+                    const empresa = document.getElementById('nome_empresa').value.trim();
+                    if (!empresa) {
+                        alert('Por favor, preencha o nome da empresa');
+                        return false;
+                    }
+                    formData.nome_empresa = empresa;
+                    return true;
+                case 10:
+                    return formData.colaboradores !== undefined;
+                case 11:
+                    return formData.faturamento !== undefined;
+                case 12:
+                    const phone = document.getElementById('whatsapp').value;
+                    if (!validatePhone(phone)) {
+                        document.getElementById('phoneError').classList.add('show');
+                        return false;
+                    }
+                    document.getElementById('phoneError').classList.remove('show');
+                    formData.whatsapp = formatPhoneForWebhook(phone);
+                    return true;
+            }
+            return true;
+        }
+
+        function selectOption(button, field, value) {
+            const parent = button.parentElement;
+            parent.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            button.classList.add('selected');
+            formData[field] = value;
+
+            // Auto enable next button
+            const nextBtn = document.getElementById(`step${currentStep}Next`);
+            if (nextBtn) nextBtn.disabled = false;
+        }
+
+        function showTextField(fieldId) {
+            document.getElementById(fieldId + '_field').classList.remove('hidden');
+        }
+
+        function updateCheckboxes() {
+            const checkboxes = document.querySelectorAll('#step3 input[type="checkbox"]');
+            const selected = [];
+            checkboxes.forEach(cb => {
+                // Ignora as checkboxes de campos condicionais
+                if (cb.id !== 'opt_outros' && cb.id !== 'opt_explicar_ideia') {
+                    const parent = cb.parentElement;
+                    if (cb.checked) {
+                        parent.classList.add('checked');
+                        selected.push(cb.value);
+                    } else {
+                        parent.classList.remove('checked');
+                    }
+                }
+            });
+            formData.automacoes_desejadas = selected;
+        }
+
+        function toggleOutrosField() {
+            const checkbox = document.getElementById('opt_outros');
+            const parent = checkbox.parentElement;
+            const field = document.getElementById('outros_field');
+            
+            if (checkbox.checked) {
+                parent.classList.add('checked');
+                field.classList.remove('hidden');
+            } else {
+                parent.classList.remove('checked');
+                field.classList.add('hidden');
+                document.getElementById('outros_detalhes').value = '';
+            }
+            updateCheckboxes();
+        }
+
+        function toggleExplicarIdeiaField() {
+            const checkbox = document.getElementById('opt_explicar_ideia');
+            const parent = checkbox.parentElement;
+            const field = document.getElementById('explicar_ideia_field');
+            
+            if (checkbox.checked) {
+                parent.classList.add('checked');
+                field.classList.remove('hidden');
+            } else {
+                parent.classList.remove('checked');
+                field.classList.add('hidden');
+                document.getElementById('detalhes_automacao').value = '';
+            }
+        }
+
+        // Phone formatting
+        document.getElementById('whatsapp').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length > 11) value = value.slice(0, 11);
+            
+            if (value.length >= 11) {
+                value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+            } else if (value.length >= 7) {
+                value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+            } else if (value.length >= 3) {
+                value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+            } else if (value.length > 0) {
+                value = value.replace(/^(\d*)/, '($1');
+            }
+            
+            e.target.value = value;
+            
+            const cleanPhone = value.replace(/\D/g, '');
+            if (cleanPhone.length === 11) {
+                document.getElementById('phoneHint').classList.add('show');
+                document.getElementById('phoneDisplay').textContent = value;
+            } else {
+                document.getElementById('phoneHint').classList.remove('show');
+            }
+        });
+
+        function validatePhone(phone) {
+            const cleanPhone = phone.replace(/\D/g, '');
+            return cleanPhone.length === 11;
+        }
+
+        function formatPhoneForWebhook(phone) {
+            const cleanPhone = phone.replace(/\D/g, '');
+            return `+55${cleanPhone}`;
+        }
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        async function submitForm() {
+            const email = document.getElementById('email').value.trim();
+            if (!validateEmail(email)) {
+                document.getElementById('emailError').classList.add('show');
+                return;
+            }
+            document.getElementById('emailError').classList.remove('show');
+            
+            formData.email = email;
+            formData.instagram = document.getElementById('instagram').value.trim();
+            
+            // Captura campo de automação atual se preenchido
+            if (document.getElementById('automacao_atual_field').classList.contains('hidden') === false) {
+                formData.automacao_atual = document.getElementById('automacao_atual').value.trim();
+            }
+
+            // Captura campo "Outros" se checkbox marcada
+            if (document.getElementById('opt_outros').checked) {
+                formData.outros_detalhes = document.getElementById('outros_detalhes').value.trim();
+            }
+
+            // Captura campo "Explicar ideia" se checkbox marcada
+            if (document.getElementById('opt_explicar_ideia').checked) {
+                formData.detalhes_automacao = document.getElementById('detalhes_automacao').value.trim();
+            }
+
+            try {
+                const response = await fetch(config.webhook, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (config.redirectUrl) {
+                    window.location.href = config.redirectUrl;
+                } else {
+                    showFinalMessage();
+                }
+            } catch (error) {
+                console.error('Erro ao enviar:', error);
+                showFinalMessage();
+            }
+        }
+
+        function showFinalMessage() {
+            document.getElementById('quizCard').innerHTML = `
+                <div class="final-message">
+                    <h2>🎉 Obrigado!</h2>
+                    <p>Recebemos suas informações e vamos entrar em contato em breve.</p>
+                    <p style="margin-top: 15px;">Prepare-se para transformar sua operação!</p>
+                </div>
+            `;
+        }
+
+        function endQuiz(reason) {
+            if (reason === 'not_ready') {
+                document.getElementById('quizCard').innerHTML = `
+                    <div class="final-message">
+                        <h2>Sem problemas!</h2>
+                        <p>Quando estiver pronto para automatizar sua operação e economizar 40% com despesas fixas, estaremos aqui.</p>
+                        <p style="margin-top: 15px;">Até breve! 👋</p>
+                    </div>
+                `;
+            } else if (reason === 'no_time') {
+                document.getElementById('quizCard').innerHTML = `
+                    <div class="final-message">
+                        <h2>Entendemos</h2>
+                        <p>Se você não consegue reservar 30 minutos do seu tempo, não é o momento ideal para implementar soluções como as nossas.</p>
+                        <p style="margin-top: 15px;">Quando suas prioridades mudarem, estaremos aqui para ajudar.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function checkAdminAccess() {
+            const password = prompt('Digite a senha de administrador:');
+            if (password === '2112') {
+                showAdminPanel();
+            }
+        }
+
+        function showAdminPanel() {
+            alert('Painel administrativo será implementado na próxima versão. Funcionalidade de edição em desenvolvimento.');
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
