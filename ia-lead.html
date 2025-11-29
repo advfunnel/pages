@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADV Funnel - IA Generativa de Graça</title>
     
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKZGV7YN84"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-QKZGV7YN84');
+        console.log('✅ Google Analytics 4 inicializado: G-QKZGV7YN84');
+    </script>
+    
     <!-- Meta Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s)
@@ -18,18 +28,14 @@
         
         // Pegar pixelId do localStorage ou usar padrão
         const savedPixelId = localStorage.getItem('pixelId');
-        const pixelId = savedPixelId || '{metaPixelId}'; // Substitua pelo seu ID padrão
+        const pixelId = savedPixelId || '4361448937281110'; // Pixel ID real
         
-        if (pixelId && pixelId !== '{metaPixelId}') {
-            fbq('init', pixelId);
-            fbq('track', 'PageView');
-            console.log('✅ Meta Pixel inicializado:', pixelId);
-        } else {
-            console.warn('⚠️ Meta Pixel ID não configurado. Use o painel admin (triple click no logo)');
-        }
+        fbq('init', pixelId);
+        fbq('track', 'PageView');
+        console.log('✅ Meta Pixel inicializado:', pixelId);
     </script>
     <noscript><img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id={metaPixelId}&ev=PageView&noscript=1"
+        src="https://www.facebook.com/tr?id=4361448937281110&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
     
