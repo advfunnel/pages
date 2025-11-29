@@ -6,16 +6,25 @@
     <title>ADV Funnel - IA Generativa de Graça</title>
     
     <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKZGV7YN84"></script>
     <script>
+        // LIMPAR valores bugados do GA4
+        const currentGA4 = localStorage.getItem('ga4Id');
+        if (!currentGA4 || currentGA4.length < 5) {
+            localStorage.setItem('ga4Id', 'G-QKZGV7YN84');
+        }
+        
+        // Carregar GA4 dinamicamente com ID correto
+        const ga4Id = localStorage.getItem('ga4Id');
+        const ga4Script = document.createElement('script');
+        ga4Script.async = true;
+        ga4Script.src = 'https://www.googletagmanager.com/gtag/js?id=' + ga4Id;
+        document.head.appendChild(ga4Script);
+        
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        
-        // Pegar GA4 ID do localStorage ou usar padrão
-        const savedGA4 = localStorage.getItem('ga4Id') || 'G-QKZGV7YN84';
-        gtag('config', savedGA4);
-        console.log('✅ Google Analytics 4 inicializado:', savedGA4);
+        gtag('config', ga4Id);
+        console.log('✅ Google Analytics 4 inicializado:', ga4Id);
     </script>
     
     <!-- Meta Pixel Code -->
@@ -29,12 +38,18 @@
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
         
-        // Pegar pixelId do localStorage ou usar padrão
-        const savedPixelId = localStorage.getItem('pixelId') || '4361448937281110';
+        // LIMPAR valores bugados do localStorage
+        const currentPixelId = localStorage.getItem('pixelId');
+        if (!currentPixelId || currentPixelId === 'savedPixelId' || currentPixelId === '{metaPixelId}' || currentPixelId.length < 10) {
+            localStorage.setItem('pixelId', '4361448937281110');
+        }
         
-        fbq('init', savedPixelId);
+        // Pegar pixelId do localStorage (agora limpo)
+        const pixelId = localStorage.getItem('pixelId');
+        
+        fbq('init', pixelId);
         fbq('track', 'PageView');
-        console.log('✅ Meta Pixel inicializado:', savedPixelId);
+        console.log('✅ Meta Pixel inicializado:', pixelId);
     </script>
     <noscript><img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=4361448937281110&ev=PageView&noscript=1"
@@ -546,6 +561,13 @@
                 <button class="admin-close" onclick="closeAdminPanel()">Cancelar</button>
                 <button class="admin-save" onclick="saveAdminSettings()">Salvar Alterações</button>
             </div>
+
+            <div style="margin-top: 25px; padding-top: 25px; border-top: 2px solid #444; text-align: center;">
+                <button onclick="clearAllSettings()" style="background: #d32f2f; color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 13px;">
+                    🗑️ LIMPAR TODAS CONFIGURAÇÕES
+                </button>
+                <p style="color: #888; font-size: 11px; margin-top: 10px;">Volta aos valores padrão</p>
+            </div>
         </div>
     </div>
 
@@ -801,10 +823,16 @@ Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
                   '🔗 Webhook: ' + (webhookUrl || 'Não configurado') + '\n' +
                   '📹 YouTube: ' + (youtubeUrl || 'Não configurado') + '\n' +
                   '📊 Pixel ID: ' + (pixelId || 'Não configurado') + '\n' +
+                  '🔑 Meta Token: ' + (metaToken ? 'Configurado' : 'Não configurado') + '\n' +
                   '📈 GA4 ID: ' + (ga4Id || 'Não configurado') + '\n\n' +
-                  '⚠️ Recarregue a página para aplicar Pixel e GA4!');
+                  '🔄 Recarregando página para aplicar mudanças...');
             
             closeAdminPanel();
+            
+            // Recarregar após 1 segundo
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
         }
 
         function loadYouTubeVideo(url) {
@@ -819,6 +847,14 @@ Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
 
             videoContainer.innerHTML = '<iframe src="' + url + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
             console.log('✅ Vídeo carregado:', url);
+        }
+
+        function clearAllSettings() {
+            if (confirm('⚠️ TEM CERTEZA?\n\nIsso vai apagar TODAS as configurações e voltar aos valores padrão!\n\nWebhook, YouTube, Pixel ID, Token, GA4 - TUDO será resetado.')) {
+                localStorage.clear();
+                alert('✅ Configurações limpas!\n\nRecarregando página...');
+                location.reload();
+            }
         }
 
         // ========== FIM FUNÇÕES ADMIN ==========
