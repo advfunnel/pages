@@ -11,8 +11,11 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-QKZGV7YN84');
-        console.log('✅ Google Analytics 4 inicializado: G-QKZGV7YN84');
+        
+        // Pegar GA4 ID do localStorage ou usar padrão
+        const savedGA4 = localStorage.getItem('ga4Id') || 'G-QKZGV7YN84';
+        gtag('config', savedGA4);
+        console.log('✅ Google Analytics 4 inicializado:', savedGA4);
     </script>
     
     <!-- Meta Pixel Code -->
@@ -27,12 +30,11 @@
         'https://connect.facebook.net/en_US/fbevents.js');
         
         // Pegar pixelId do localStorage ou usar padrão
-        const savedPixelId = localStorage.getItem('pixelId');
-        const pixelId = savedPixelId || '4361448937281110'; // Pixel ID real
+        const savedPixelId = localStorage.getItem('pixelId') || '4361448937281110';
         
-        fbq('init', pixelId);
+        fbq('init', savedPixelId);
         fbq('track', 'PageView');
-        console.log('✅ Meta Pixel inicializado:', pixelId);
+        console.log('✅ Meta Pixel inicializado:', savedPixelId);
     </script>
     <noscript><img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=4361448937281110&ev=PageView&noscript=1"
@@ -527,7 +529,17 @@
             
             <div class="admin-group">
                 <label>📊 Facebook Pixel ID</label>
-                <input type="text" id="pixelId" placeholder="1234567890">
+                <input type="text" id="pixelId" placeholder="4361448937281110">
+            </div>
+
+            <div class="admin-group">
+                <label>🔑 Meta Conversion API Token</label>
+                <input type="text" id="metaToken" placeholder="Token para Conversions API (backend)">
+            </div>
+
+            <div class="admin-group">
+                <label>📈 Google Analytics 4 ID</label>
+                <input type="text" id="ga4Id" placeholder="G-QKZGV7YN84">
             </div>
             
             <div class="admin-buttons">
@@ -737,13 +749,28 @@ Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
         }
 
         function loadAdminSettings() {
+            // Definir valores padrão na primeira vez
+            if (!localStorage.getItem('pixelId')) {
+                localStorage.setItem('pixelId', '4361448937281110');
+            }
+            if (!localStorage.getItem('metaToken')) {
+                localStorage.setItem('metaToken', 'EAAYztefbolYBPDXmIHdtHf0oV0OlCDILoJnY1fnk31XbNWYdiZALGUZBYf7MOTwLaeV2PtHPRvE79crPEXQVcYxoazJmCAEJoNRsOssJ0EtM5ZAeVLEZAJEqm5LkGsgiubZBLK9HlGVSGeon0U0FCb9YBJVtDsxfvhmeSnc5DxSjHumC3K4df3ZCeVoYgXMAZDZD');
+            }
+            if (!localStorage.getItem('ga4Id')) {
+                localStorage.setItem('ga4Id', 'G-QKZGV7YN84');
+            }
+
             const webhookUrl = localStorage.getItem('webhookUrl') || '';
             const youtubeUrl = localStorage.getItem('youtubeUrl') || '';
             const pixelId = localStorage.getItem('pixelId') || '';
+            const metaToken = localStorage.getItem('metaToken') || '';
+            const ga4Id = localStorage.getItem('ga4Id') || '';
 
             document.getElementById('webhookUrl').value = webhookUrl;
             document.getElementById('youtubeUrl').value = youtubeUrl;
             document.getElementById('pixelId').value = pixelId;
+            document.getElementById('metaToken').value = metaToken;
+            document.getElementById('ga4Id').value = ga4Id;
 
             // Carregar vídeo se configurado
             if (youtubeUrl) {
@@ -755,32 +782,27 @@ Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
             const webhookUrl = document.getElementById('webhookUrl').value.trim();
             const youtubeUrl = document.getElementById('youtubeUrl').value.trim();
             const pixelId = document.getElementById('pixelId').value.trim();
+            const metaToken = document.getElementById('metaToken').value.trim();
+            const ga4Id = document.getElementById('ga4Id').value.trim();
 
             // Salvar no localStorage
             localStorage.setItem('webhookUrl', webhookUrl);
             localStorage.setItem('youtubeUrl', youtubeUrl);
             localStorage.setItem('pixelId', pixelId);
+            localStorage.setItem('metaToken', metaToken);
+            localStorage.setItem('ga4Id', ga4Id);
 
             // Atualizar vídeo
             if (youtubeUrl) {
                 loadYouTubeVideo(youtubeUrl);
             }
 
-            // Reinicializar Meta Pixel se mudou
-            if (pixelId && typeof fbq !== 'undefined') {
-                try {
-                    fbq('init', pixelId);
-                    fbq('track', 'PageView');
-                    console.log('✅ Meta Pixel reinicializado:', pixelId);
-                } catch(e) {
-                    console.error('❌ Erro ao reinicializar pixel:', e);
-                }
-            }
-
             alert('✅ Configurações salvas com sucesso!\n\n' + 
                   '🔗 Webhook: ' + (webhookUrl || 'Não configurado') + '\n' +
                   '📹 YouTube: ' + (youtubeUrl || 'Não configurado') + '\n' +
-                  '📊 Pixel ID: ' + (pixelId || 'Não configurado'));
+                  '📊 Pixel ID: ' + (pixelId || 'Não configurado') + '\n' +
+                  '📈 GA4 ID: ' + (ga4Id || 'Não configurado') + '\n\n' +
+                  '⚠️ Recarregue a página para aplicar Pixel e GA4!');
             
             closeAdminPanel();
         }
