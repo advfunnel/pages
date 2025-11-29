@@ -6,25 +6,23 @@
     <title>ADV Funnel - IA Generativa de Graça</title>
     
     <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKZGV7YN84"></script>
     <script>
-        // LIMPAR valores bugados do GA4
-        const currentGA4 = localStorage.getItem('ga4Id');
-        if (!currentGA4 || currentGA4.length < 5) {
-            localStorage.setItem('ga4Id', 'G-QKZGV7YN84');
-        }
-        
-        // Carregar GA4 dinamicamente com ID correto
-        const ga4Id = localStorage.getItem('ga4Id');
-        const ga4Script = document.createElement('script');
-        ga4Script.async = true;
-        ga4Script.src = 'https://www.googletagmanager.com/gtag/js?id=' + ga4Id;
-        document.head.appendChild(ga4Script);
-        
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', ga4Id);
-        console.log('✅ Google Analytics 4 inicializado:', ga4Id);
+        gtag('config', 'G-QKZGV7YN84');
+    </script>
+    
+    <!-- LIMPEZA FORÇADA -->
+    <script>
+        // Limpar localStorage SEMPRE ao carregar
+        if (!sessionStorage.getItem('cleaned')) {
+            localStorage.removeItem('pixelId');
+            localStorage.removeItem('ga4Id');
+            sessionStorage.setItem('cleaned', 'true');
+            console.log('🧹 localStorage limpo');
+        }
     </script>
     
     <!-- Meta Pixel Code -->
@@ -38,19 +36,8 @@
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
         
-        // Pegar do localStorage ou usar padrão (SIMPLIFICADO)
-        var pixelID = localStorage.getItem('pixelId') || '4361448937281110';
-        
-        // Se for string literal bugada, corrigir
-        if (pixelID === 'pixelId' || pixelID === 'savedPixelId' || pixelID.length < 10) {
-            pixelID = '4361448937281110';
-            localStorage.setItem('pixelId', pixelID);
-        }
-        
-        // Inicializar
-        fbq('init', pixelID);
+        fbq('init', '4361448937281110');
         fbq('track', 'PageView');
-        console.log('Meta Pixel ID usado:', pixelID);
     </script>
     <noscript><img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=4361448937281110&ev=PageView&noscript=1"
@@ -544,8 +531,8 @@
             </div>
             
             <div class="admin-group">
-                <label>📊 Facebook Pixel ID</label>
-                <input type="text" id="pixelId" placeholder="4361448937281110">
+                <label>📊 Facebook Pixel ID (FIXO)</label>
+                <input type="text" id="pixelId" placeholder="4361448937281110" readonly style="background: #1a1a1a; cursor: not-allowed;">
             </div>
 
             <div class="admin-group">
@@ -554,8 +541,8 @@
             </div>
 
             <div class="admin-group">
-                <label>📈 Google Analytics 4 ID</label>
-                <input type="text" id="ga4Id" placeholder="G-QKZGV7YN84">
+                <label>📈 Google Analytics 4 ID (FIXO)</label>
+                <input type="text" id="ga4Id" placeholder="G-QKZGV7YN84" readonly style="background: #1a1a1a; cursor: not-allowed;">
             </div>
             
             <div class="admin-buttons">
@@ -772,28 +759,15 @@ Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
         }
 
         function loadAdminSettings() {
-            // Definir valores padrão na primeira vez
-            if (!localStorage.getItem('pixelId')) {
-                localStorage.setItem('pixelId', '4361448937281110');
-            }
-            if (!localStorage.getItem('metaToken')) {
-                localStorage.setItem('metaToken', 'EAAYztefbolYBPDXmIHdtHf0oV0OlCDILoJnY1fnk31XbNWYdiZALGUZBYf7MOTwLaeV2PtHPRvE79crPEXQVcYxoazJmCAEJoNRsOssJ0EtM5ZAeVLEZAJEqm5LkGsgiubZBLK9HlGVSGeon0U0FCb9YBJVtDsxfvhmeSnc5DxSjHumC3K4df3ZCeVoYgXMAZDZD');
-            }
-            if (!localStorage.getItem('ga4Id')) {
-                localStorage.setItem('ga4Id', 'G-QKZGV7YN84');
-            }
-
             const webhookUrl = localStorage.getItem('webhookUrl') || '';
             const youtubeUrl = localStorage.getItem('youtubeUrl') || '';
-            const pixelId = localStorage.getItem('pixelId') || '';
             const metaToken = localStorage.getItem('metaToken') || '';
-            const ga4Id = localStorage.getItem('ga4Id') || '';
 
             document.getElementById('webhookUrl').value = webhookUrl;
             document.getElementById('youtubeUrl').value = youtubeUrl;
-            document.getElementById('pixelId').value = pixelId;
+            document.getElementById('pixelId').value = '4361448937281110';
             document.getElementById('metaToken').value = metaToken;
-            document.getElementById('ga4Id').value = ga4Id;
+            document.getElementById('ga4Id').value = 'G-QKZGV7YN84';
 
             // Carregar vídeo se configurado
             if (youtubeUrl) {
@@ -804,36 +778,25 @@ Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
         function saveAdminSettings() {
             const webhookUrl = document.getElementById('webhookUrl').value.trim();
             const youtubeUrl = document.getElementById('youtubeUrl').value.trim();
-            const pixelId = document.getElementById('pixelId').value.trim();
             const metaToken = document.getElementById('metaToken').value.trim();
-            const ga4Id = document.getElementById('ga4Id').value.trim();
 
-            // Salvar no localStorage
+            // Salvar apenas webhook, youtube e token (NÃO pixel e GA4)
             localStorage.setItem('webhookUrl', webhookUrl);
             localStorage.setItem('youtubeUrl', youtubeUrl);
-            localStorage.setItem('pixelId', pixelId);
             localStorage.setItem('metaToken', metaToken);
-            localStorage.setItem('ga4Id', ga4Id);
 
             // Atualizar vídeo
             if (youtubeUrl) {
                 loadYouTubeVideo(youtubeUrl);
             }
 
-            alert('✅ Configurações salvas com sucesso!\n\n' + 
+            alert('✅ Configurações salvas!\n\n' + 
                   '🔗 Webhook: ' + (webhookUrl || 'Não configurado') + '\n' +
                   '📹 YouTube: ' + (youtubeUrl || 'Não configurado') + '\n' +
-                  '📊 Pixel ID: ' + (pixelId || 'Não configurado') + '\n' +
-                  '🔑 Meta Token: ' + (metaToken ? 'Configurado' : 'Não configurado') + '\n' +
-                  '📈 GA4 ID: ' + (ga4Id || 'Não configurado') + '\n\n' +
-                  '🔄 Recarregando página para aplicar mudanças...');
+                  '🔑 Meta Token: ' + (metaToken ? 'Configurado' : 'Não configurado') + '\n\n' +
+                  '⚠️ Pixel e GA4 são fixos (hard-coded)');
             
             closeAdminPanel();
-            
-            // Recarregar após 1 segundo
-            setTimeout(() => {
-                location.reload();
-            }, 1000);
         }
 
         function loadYouTubeVideo(url) {
