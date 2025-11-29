@@ -36,8 +36,21 @@
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
         
-        fbq('init', '4361448937281110');
+        // Configurações do pixel
+        fbq('init', '4361448937281110', {
+            external_id: Date.now().toString()
+        });
+        
+        // Disparar PageView
         fbq('track', 'PageView');
+        
+        // Disparar evento customizado para teste
+        fbq('trackCustom', 'PageLoaded', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('✅ Meta Pixel disparado:', '4361448937281110');
+        console.log('✅ Eventos: PageView + PageLoaded');
     </script>
     <noscript><img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=4361448937281110&ev=PageView&noscript=1"
@@ -686,6 +699,42 @@ Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
                 brandingRemovalInterval = setInterval(removeBranding, 200);
                 console.log('✅ Sistema anti-branding ativado');
             }, 2000);
+
+            // ========== RASTREAMENTO META PIXEL ==========
+            
+            // Rastrear clique no botão Cal.com
+            setTimeout(() => {
+                const calButton = document.querySelector('[data-cal-link]');
+                if (calButton) {
+                    calButton.addEventListener('click', function() {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', 'Lead');
+                            fbq('trackCustom', 'CalendarioAberto');
+                            console.log('📊 Meta Pixel: Lead + CalendarioAberto');
+                        }
+                    });
+                }
+            }, 3000);
+
+            // Rastrear scroll
+            let scrollTracked = false;
+            window.addEventListener('scroll', function() {
+                if (!scrollTracked && window.scrollY > 100) {
+                    scrollTracked = true;
+                    if (typeof fbq !== 'undefined') {
+                        fbq('trackCustom', 'ScrollEngagement');
+                        console.log('📊 Meta Pixel: ScrollEngagement');
+                    }
+                }
+            });
+
+            // Rastrear 30s na página
+            setTimeout(() => {
+                if (typeof fbq !== 'undefined') {
+                    fbq('trackCustom', 'TimeOnPage30s');
+                    console.log('📊 Meta Pixel: TimeOnPage30s');
+                }
+            }, 30000);
         });
 
         // ========== FUNÇÕES DO PAINEL ADMIN ==========
