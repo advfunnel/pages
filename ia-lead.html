@@ -4,10 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADV Funnel - IA Generativa de Graça</title>
-    <link rel="preconnect" href="https://lhbwfbquxkutcyqazpnw.supabase.co">
-    <link rel="preconnect" href="https://app.cal.com">
-    <link rel="dns-prefetch" href="https://lhbwfbquxkutcyqazpnw.supabase.co">
-    <link rel="dns-prefetch" href="https://app.cal.com">
+    
+    <!-- Meta Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        
+        // Pegar pixelId do localStorage ou usar padrão
+        const savedPixelId = localStorage.getItem('pixelId');
+        const pixelId = savedPixelId || '{metaPixelId}'; // Substitua pelo seu ID padrão
+        
+        if (pixelId && pixelId !== '{metaPixelId}') {
+            fbq('init', pixelId);
+            fbq('track', 'PageView');
+            console.log('✅ Meta Pixel inicializado:', pixelId);
+        } else {
+            console.warn('⚠️ Meta Pixel ID não configurado. Use o painel admin (triple click no logo)');
+        }
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id={metaPixelId}&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    
     <style>
         * {
             margin: 0;
@@ -22,8 +47,6 @@
             padding: 20px 15px;
             position: relative;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
         #tech-bg {
@@ -41,9 +64,6 @@
             position: absolute;
             opacity: 0;
             z-index: 1;
-            will-change: transform, opacity;
-            transform: translateZ(0);
-            backface-visibility: hidden;
         }
 
         .binary {
@@ -89,202 +109,26 @@
             animation: floatUp 22s infinite ease-in-out;
         }
 
-        .tech-line {
-            display: none;
-        }
-
-        .tech-line-up {
-            display: none;
-        }
-
-        .neural-node {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: rgba(255, 122, 1, 0.6);
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(255, 122, 1, 0.4);
-            opacity: 0;
-            animation: nodeFloat 20s infinite ease-in-out;
-            pointer-events: none;
-        }
-
-        .neural-connection {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                rgba(255, 122, 1, 0) 0%,
-                rgba(255, 122, 1, 0.3) 50%,
-                rgba(255, 122, 1, 0) 100%
-            );
-            opacity: 0;
-            animation: connectionPulse 8s infinite ease-in-out;
-            transform-origin: left center;
-            pointer-events: none;
-        }
-
-        .ai-particle {
-            position: absolute;
-            font-size: 14px;
-            color: rgba(255, 122, 1, 0.35);
-            font-family: 'Courier New', monospace;
-            font-weight: 600;
-            opacity: 0;
-            animation: particleFloat 25s infinite ease-in-out;
-            text-shadow: 0 0 8px rgba(255, 122, 1, 0.3);
-            pointer-events: none;
-        }
-
-        .brain-wave {
-            position: absolute;
-            width: 80px;
-            height: 40px;
-            border: 2px solid rgba(255, 122, 1, 0.25);
-            border-radius: 50%;
-            opacity: 0;
-            animation: brainPulse 6s infinite ease-in-out;
-            pointer-events: none;
-        }
-
-        .tech-dot {
-            display: none;
-        }
-
-        .circuit-line {
-            display: none;
-        }
-
-        @keyframes nodeFloat {
-            0% { 
-                transform: translate(0, 0) scale(0.8);
-                opacity: 0; 
-            }
-            10% { 
-                opacity: 1; 
-            }
-            50% {
-                transform: translate(var(--float-x, 30px), var(--float-y, -40px)) scale(1.5);
-                opacity: 1;
-            }
-            90% { 
-                opacity: 1; 
-            }
-            100% {
-                transform: translate(0, 0) scale(0.8);
-                opacity: 0;
-            }
-        }
-
-        @keyframes connectionPulse {
-            0%, 100% { 
-                opacity: 0;
-                transform: scaleX(0);
-            }
-            50% { 
-                opacity: 0.6;
-                transform: scaleX(1);
-            }
-        }
-
-        @keyframes particleFloat {
-            0% { 
-                transform: translateY(100vh) translateX(0) rotate(0deg);
-                opacity: 0; 
-            }
-            10% { 
-                opacity: 0.8; 
-            }
-            50% {
-                transform: translateY(50vh) translateX(var(--drift-x, 20px)) rotate(180deg);
-                opacity: 1;
-            }
-            90% { 
-                opacity: 0.8; 
-            }
-            100% { 
-                transform: translateY(-10vh) translateX(var(--drift-x, 30px)) rotate(360deg); 
-                opacity: 0; 
-            }
-        }
-
-        @keyframes brainPulse {
-            0%, 100% { 
-                transform: scale(0.5) rotate(0deg);
-                opacity: 0; 
-            }
-            50% { 
-                transform: scale(1.8) rotate(180deg);
-                opacity: 0.5; 
-            }
-        }
-
-        @keyframes pulseDot {
-            /* Removido - não usado mais */
-        }
-
-        @keyframes fadeInOut {
-            /* Removido - não usado mais */
-        }
-
         @keyframes floatUp {
-            0% { 
-                transform: translateY(100vh) translateX(0); 
-                opacity: 0; 
-            }
-            5% { 
-                opacity: 0.8; 
-            }
-            50% {
-                opacity: 1;
-            }
-            90% { 
-                opacity: 0.8; 
-            }
-            100% { 
-                transform: translateY(-100px) translateX(var(--drift, 20px)); 
-                opacity: 0; 
-            }
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            5% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-5vh) translateX(var(--drift, 20px)); opacity: 0; }
         }
 
         @keyframes floatUpRotate {
-            0% { 
-                transform: translateY(100vh) translateX(0) rotate(0deg); 
-                opacity: 0; 
-            }
-            5% { 
-                opacity: 0.7; 
-            }
-            50% {
-                opacity: 1;
-            }
-            90% { 
-                opacity: 0.7; 
-            }
-            100% { 
-                transform: translateY(-100px) translateX(var(--drift, 30px)) rotate(360deg); 
-                opacity: 0; 
-            }
+            0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+            5% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-5vh) translateX(var(--drift, 30px)) rotate(360deg); opacity: 0; }
         }
 
         @keyframes floatUpScale {
-            0% { 
-                transform: translateY(100vh) translateX(0) scale(0.8); 
-                opacity: 0; 
-            }
-            5% { 
-                opacity: 0.6; 
-            }
-            50% { 
-                transform: translateY(50vh) translateX(var(--drift, 15px)) scale(1.2); 
-                opacity: 0.8; 
-            }
-            90% { 
-                opacity: 0.6; 
-            }
-            100% { 
-                transform: translateY(-100px) translateX(var(--drift, 25px)) scale(0.8); 
-                opacity: 0; 
-            }
+            0% { transform: translateY(100vh) translateX(0) scale(0.8); opacity: 0; }
+            5% { opacity: 0.6; }
+            50% { transform: translateY(50vh) translateX(var(--drift, 15px)) scale(1.2); opacity: 0.8; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-5vh) translateX(var(--drift, 25px)) scale(0.8); opacity: 0; }
         }
 
         .container {
@@ -317,11 +161,7 @@
 
         .logo img {
             height: 60px;
-            width: auto;
-            max-width: 100%;
             display: block;
-            object-fit: contain;
-            loading: eager;
         }
 
         .message-box {
@@ -470,23 +310,19 @@
             width: 100%;
             padding: 16px;
             font-size: 14px;
-            border: 2px solid #ff7401;
+            border: 2px solid #444;
             border-radius: 12px;
-            background: #ffffff;
-            color: #1a1a1a;
+            background: #0f0f0f;
+            color: #ffffff;
             transition: all 0.3s ease;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Courier New', monospace;
         }
 
         .admin-group input:focus {
             outline: none;
-            border-color: #ff9933;
-            box-shadow: 0 0 20px rgba(255, 116, 1, 0.3);
-            background: #ffffff;
-        }
-
-        .admin-group input::placeholder {
-            color: #999999;
+            border-color: #ff7401;
+            box-shadow: 0 0 25px rgba(255, 116, 1, 0.3);
+            background: #1a1a1a;
         }
 
         .admin-buttons {
@@ -622,10 +458,7 @@
             }
             .message-left { margin-right: 35px; }
             .message-right { margin-left: 35px; }
-            .logo img { 
-                height: 45px; 
-                width: auto;
-            }
+            .logo img { height: 50px; }
         }
     </style>
 </head>
@@ -634,7 +467,7 @@
 
     <div class="header">
         <div class="logo">
-            <img src="https://lhbwfbquxkutcyqazpnw.supabase.co/storage/v1/object/public/images/logo/advfunnel-white.png" alt="ADV Funnel" width="200" height="60" loading="eager">
+            <img src="https://lhbwfbquxkutcyqazpnw.supabase.co/storage/v1/object/public/images/logo/advfunnel-white.png" alt="ADV Funnel">
         </div>
     </div>
 
@@ -687,23 +520,8 @@
             </div>
             
             <div class="admin-group">
-                <label>📊 Meta Pixel ID</label>
-                <input type="text" id="metaPixelId" placeholder="1234567890">
-            </div>
-            
-            <div class="admin-group">
-                <label>📈 Google Analytics 4 ID</label>
-                <input type="text" id="ga4Id" placeholder="G-XXXXXXXXXX">
-            </div>
-            
-            <div class="admin-group">
-                <label>🔍 Google Tag Manager ID</label>
-                <input type="text" id="gtmId" placeholder="GTM-XXXXXXX">
-            </div>
-            
-            <div class="admin-group">
-                <label>🎯 Google Ads ID</label>
-                <input type="text" id="googleAdsId" placeholder="AW-XXXXXXXXXX">
+                <label>📊 Facebook Pixel ID</label>
+                <input type="text" id="pixelId" placeholder="1234567890">
             </div>
             
             <div class="admin-buttons">
@@ -714,7 +532,7 @@
     </div>
 
     <!-- Cal.com FLOATING BUTTON -->
-    <script type="text/javascript" defer>
+    <script type="text/javascript">
       (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
 Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
       Cal.ns.iahumanizada("floatingButton", {"calLink":"advanx/iahumanizada","config":{"layout":"month_view"},"buttonText":"AGENDAR MINHA APRESENTAÇÃO","hideButtonIcon":false,"buttonColor":"#ff7a01"}); 
@@ -722,337 +540,84 @@ Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
     </script>
 
     <script>
-        // Contador de cliques na logo
-        let logoClickCount = 0;
-        let logoClickTimer = null;
-
-        // Função para abrir modal de senha
-        function openPasswordModal() {
-            document.getElementById('passwordModal').style.display = 'block';
-            document.getElementById('adminPassword').value = '';
-            document.getElementById('adminPassword').focus();
-        }
-
-        // Função para fechar modal de senha
-        function closePasswordModal() {
-            document.getElementById('passwordModal').style.display = 'none';
-            document.getElementById('adminPassword').value = '';
-        }
-
-        // Verificar senha
-        function checkPassword() {
-            const password = document.getElementById('adminPassword').value;
-            if (password === '2112') {
-                closePasswordModal();
-                openAdminPanel();
-            } else {
-                alert('❌ Senha incorreta!');
-                document.getElementById('adminPassword').value = '';
-                document.getElementById('adminPassword').focus();
-            }
-        }
-
-        // Enter no campo de senha
-        document.addEventListener('DOMContentLoaded', function() {
-            const passwordInput = document.getElementById('adminPassword');
-            if (passwordInput) {
-                passwordInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        checkPassword();
-                    }
-                });
-            }
-
-            // Detectar 3 cliques na logo
-            const logo = document.querySelector('.logo');
-            if (logo) {
-                logo.addEventListener('click', function() {
-                    logoClickCount++;
-                    
-                    // Se já tem timer rodando, limpa
-                    if (logoClickTimer) {
-                        clearTimeout(logoClickTimer);
-                    }
-                    
-                    // Se chegou a 3 cliques
-                    if (logoClickCount === 3) {
-                        openPasswordModal();
-                        logoClickCount = 0;
-                        return;
-                    }
-                    
-                    // Reseta contador após 1 segundo
-                    logoClickTimer = setTimeout(function() {
-                        logoClickCount = 0;
-                    }, 1000);
-                });
-            }
-        });
-
-        // Abrir painel admin
-        function openAdminPanel() {
-            // Carregar valores salvos
-            document.getElementById('webhookUrl').value = localStorage.getItem('webhookUrl') || '';
-            document.getElementById('youtubeUrl').value = localStorage.getItem('youtubeUrl') || '';
-            document.getElementById('metaPixelId').value = localStorage.getItem('metaPixelId') || '';
-            document.getElementById('ga4Id').value = localStorage.getItem('ga4Id') || '';
-            document.getElementById('gtmId').value = localStorage.getItem('gtmId') || '';
-            document.getElementById('googleAdsId').value = localStorage.getItem('googleAdsId') || '';
-            
-            document.getElementById('adminPanel').style.display = 'block';
-        }
-
-        // Fechar painel admin
-        function closeAdminPanel() {
-            document.getElementById('adminPanel').style.display = 'none';
-        }
-
-        // Salvar configurações
-        function saveAdminSettings() {
-            const webhookUrl = document.getElementById('webhookUrl').value;
-            const youtubeUrl = document.getElementById('youtubeUrl').value;
-            const metaPixelId = document.getElementById('metaPixelId').value;
-            const ga4Id = document.getElementById('ga4Id').value;
-            const gtmId = document.getElementById('gtmId').value;
-            const googleAdsId = document.getElementById('googleAdsId').value;
-            
-            // Salvar no localStorage
-            localStorage.setItem('webhookUrl', webhookUrl);
-            localStorage.setItem('youtubeUrl', youtubeUrl);
-            localStorage.setItem('metaPixelId', metaPixelId);
-            localStorage.setItem('ga4Id', ga4Id);
-            localStorage.setItem('gtmId', gtmId);
-            localStorage.setItem('googleAdsId', googleAdsId);
-            
-            // Atualizar vídeo se tiver URL
-            if (youtubeUrl) {
-                loadVideo(youtubeUrl);
-            }
-            
-            // Instalar pixels
-            installPixels();
-            
-            alert('✅ Configurações salvas com sucesso!');
-            closeAdminPanel();
-        }
-
-        // Carregar vídeo
-        function loadVideo(url) {
-            const container = document.getElementById('videoContainer');
-            if (url && container) {
-                container.innerHTML = `<iframe src="${url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-            }
-        }
-
-        // Instalar pixels e tags
-        function installPixels() {
-            // Meta Pixel
-            const metaPixelId = localStorage.getItem('metaPixelId');
-            if (metaPixelId && !document.querySelector(`script[data-pixel="meta"]`)) {
-                const metaScript = document.createElement('script');
-                metaScript.setAttribute('data-pixel', 'meta');
-                metaScript.innerHTML = `
-                    !function(f,b,e,v,n,t,s)
-                    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                    n.queue=[];t=b.createElement(e);t.async=!0;
-                    t.src=v;s=b.getElementsByTagName(e)[0];
-                    s.parentNode.insertBefore(t,s)}(window, document,'script',
-                    'https://connect.facebook.net/en_US/fbevents.js');
-                    fbq('init', '${metaPixelId}');
-                    fbq('track', 'PageView');
-                `;
-                document.head.appendChild(metaScript);
-                
-                const metaNoscript = document.createElement('noscript');
-                metaNoscript.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1"/>`;
-                document.body.appendChild(metaNoscript);
-            }
-
-            // Google Analytics 4
-            const ga4Id = localStorage.getItem('ga4Id');
-            if (ga4Id && !document.querySelector(`script[data-pixel="ga4"]`)) {
-                const ga4Script1 = document.createElement('script');
-                ga4Script1.setAttribute('data-pixel', 'ga4');
-                ga4Script1.async = true;
-                ga4Script1.src = `https://www.googletagmanager.com/gtag/js?id=${ga4Id}`;
-                document.head.appendChild(ga4Script1);
-                
-                const ga4Script2 = document.createElement('script');
-                ga4Script2.innerHTML = `
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', '${ga4Id}');
-                `;
-                document.head.appendChild(ga4Script2);
-            }
-
-            // Google Tag Manager
-            const gtmId = localStorage.getItem('gtmId');
-            if (gtmId && !document.querySelector(`script[data-pixel="gtm"]`)) {
-                const gtmScript = document.createElement('script');
-                gtmScript.setAttribute('data-pixel', 'gtm');
-                gtmScript.innerHTML = `
-                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                    })(window,document,'script','dataLayer','${gtmId}');
-                `;
-                document.head.appendChild(gtmScript);
-                
-                const gtmNoscript = document.createElement('noscript');
-                gtmNoscript.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
-                document.body.insertBefore(gtmNoscript, document.body.firstChild);
-            }
-
-            // Google Ads
-            const googleAdsId = localStorage.getItem('googleAdsId');
-            if (googleAdsId && !document.querySelector(`script[data-pixel="gads"]`)) {
-                const gadsScript = document.createElement('script');
-                gadsScript.setAttribute('data-pixel', 'gads');
-                gadsScript.async = true;
-                gadsScript.src = `https://www.googletagmanager.com/gtag/js?id=${googleAdsId}`;
-                document.head.appendChild(gadsScript);
-                
-                const gadsScript2 = document.createElement('script');
-                gadsScript2.innerHTML = `
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', '${googleAdsId}');
-                `;
-                document.head.appendChild(gadsScript2);
-            }
-        }
-
-        // Inicializar ao carregar página
-        window.addEventListener('DOMContentLoaded', function() {
-            // Carregar vídeo salvo
-            const savedVideo = localStorage.getItem('youtubeUrl');
-            if (savedVideo) {
-                loadVideo(savedVideo);
-            }
-            
-            // Instalar pixels salvos
-            installPixels();
-        });
-
         function createTechBackground() {
             const container = document.getElementById('tech-bg');
             const binaryChars = ['0', '1', '0', '1', '01', '10', '001', '101', '010'];
             const techIcons = ['⟨⟩', '{ }', '< /', '>', '▲', '◆', '●', '■'];
             
-            // Detectar mobile para reduzir elementos
-            const isMobile = window.innerWidth <= 768;
-            const multiplier = isMobile ? 0.5 : 1;
-            
-            // Binários
-            const binaryCount = Math.floor(30 * multiplier);
-            for (let i = 0; i < binaryCount; i++) {
+            for (let i = 0; i < 30; i++) {
                 const binary = document.createElement('div');
                 binary.className = 'tech-element binary';
                 binary.textContent = binaryChars[Math.floor(Math.random() * binaryChars.length)].repeat(Math.floor(Math.random() * 3) + 1);
                 binary.style.left = Math.random() * 100 + '%';
-                binary.style.bottom = '-50px';
-                binary.style.animationDelay = (Math.random() * 5) + 's';
+                
+                if (i < 10) {
+                    binary.style.bottom = (Math.random() * 80 + 10) + '%';
+                    binary.style.animationDelay = '0s';
+                    binary.style.opacity = '0.8';
+                } else {
+                    binary.style.bottom = '-50px';
+                    binary.style.animationDelay = Math.random() * 10 + 's';
+                }
+                
                 binary.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
                 container.appendChild(binary);
             }
 
-            // Ícones tech
-            const iconCount = Math.floor(25 * multiplier);
-            for (let i = 0; i < iconCount; i++) {
+            for (let i = 0; i < 25; i++) {
                 const icon = document.createElement('div');
                 icon.className = 'tech-element tech-icon';
                 icon.textContent = techIcons[Math.floor(Math.random() * techIcons.length)];
                 icon.style.left = Math.random() * 100 + '%';
-                icon.style.bottom = '-50px';
-                icon.style.animationDelay = (Math.random() * 6) + 's';
+                
+                if (i < 8) {
+                    icon.style.bottom = (Math.random() * 80 + 10) + '%';
+                    icon.style.animationDelay = '0s';
+                    icon.style.opacity = '0.7';
+                } else {
+                    icon.style.bottom = '-50px';
+                    icon.style.animationDelay = Math.random() * 12 + 's';
+                }
+                
                 icon.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
                 container.appendChild(icon);
             }
 
-            // Formas geométricas
             const shapes = ['circle', 'square'];
-            const shapeCount = Math.floor(20 * multiplier);
-            for (let i = 0; i < shapeCount; i++) {
+            for (let i = 0; i < 20; i++) {
                 const shape = document.createElement('div');
                 shape.className = 'tech-element geo-shape ' + shapes[Math.floor(Math.random() * shapes.length)];
                 shape.style.left = Math.random() * 100 + '%';
-                shape.style.bottom = '-50px';
-                shape.style.animationDelay = (Math.random() * 7) + 's';
+                
+                if (i < 6) {
+                    shape.style.bottom = (Math.random() * 80 + 10) + '%';
+                    shape.style.animationDelay = '0s';
+                    shape.style.opacity = '0.6';
+                } else {
+                    shape.style.bottom = '-50px';
+                    shape.style.animationDelay = Math.random() * 10 + 's';
+                }
+                
                 shape.style.setProperty('--drift', (Math.random() * 50 - 25) + 'px');
                 container.appendChild(shape);
             }
 
-            // Partículas
-            const particleCount = Math.floor(40 * multiplier);
-            for (let i = 0; i < particleCount; i++) {
+            for (let i = 0; i < 40; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'tech-element soft-particle';
                 particle.style.left = Math.random() * 100 + '%';
-                particle.style.bottom = '-20px';
-                particle.style.animationDelay = (Math.random() * 4) + 's';
+                
+                if (i < 15) {
+                    particle.style.bottom = (Math.random() * 80 + 10) + '%';
+                    particle.style.animationDelay = '0s';
+                    particle.style.opacity = '0.8';
+                } else {
+                    particle.style.bottom = '-20px';
+                    particle.style.animationDelay = Math.random() * 8 + 's';
+                }
+                
                 particle.style.setProperty('--drift', (Math.random() * 40 - 20) + 'px');
                 container.appendChild(particle);
-            }
-
-            // NÓS DE REDE NEURAL (nodes flutuantes)
-            const nodeCount = Math.floor(25 * multiplier);
-            for (let i = 0; i < nodeCount; i++) {
-                const node = document.createElement('div');
-                node.className = 'neural-node';
-                node.style.left = Math.random() * 100 + '%';
-                node.style.top = Math.random() * 100 + '%';
-                node.style.animationDelay = (Math.random() * 3) + 's';
-                node.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                node.style.setProperty('--float-x', (Math.random() * 60 - 30) + 'px');
-                node.style.setProperty('--float-y', (Math.random() * 60 - 30) + 'px');
-                container.appendChild(node);
-            }
-
-            // CONEXÕES ENTRE NÓS (linhas que pulsam)
-            const connectionCount = Math.floor(15 * multiplier);
-            for (let i = 0; i < connectionCount; i++) {
-                const conn = document.createElement('div');
-                conn.className = 'neural-connection';
-                conn.style.width = (Math.random() * 150 + 80) + 'px';
-                conn.style.left = Math.random() * 90 + '%';
-                conn.style.top = Math.random() * 100 + '%';
-                conn.style.animationDelay = (Math.random() * 2) + 's';
-                conn.style.animationDuration = (Math.random() * 6 + 6) + 's';
-                conn.style.transform = `rotate(${Math.random() * 360}deg)`;
-                container.appendChild(conn);
-            }
-
-            // PARTÍCULAS DE IA (símbolos tech)
-            const aiSymbols = ['AI', 'ML', 'NN', '{ }', '<>', '∞', '∑', '∆', '∇', '⊕'];
-            const particleAICount = Math.floor(18 * multiplier);
-            for (let i = 0; i < particleAICount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'ai-particle';
-                particle.textContent = aiSymbols[Math.floor(Math.random() * aiSymbols.length)];
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.bottom = '-50px';
-                particle.style.animationDelay = (Math.random() * 4) + 's';
-                particle.style.animationDuration = (Math.random() * 12 + 20) + 's';
-                particle.style.setProperty('--drift-x', (Math.random() * 80 - 40) + 'px');
-                container.appendChild(particle);
-            }
-
-            // ONDAS CEREBRAIS (círculos que pulsam)
-            const waveCount = Math.floor(12 * multiplier);
-            for (let i = 0; i < waveCount; i++) {
-                const wave = document.createElement('div');
-                wave.className = 'brain-wave';
-                wave.style.left = Math.random() * 95 + '%';
-                wave.style.top = Math.random() * 95 + '%';
-                wave.style.animationDelay = (Math.random() * 2) + 's';
-                wave.style.animationDuration = (Math.random() * 4 + 5) + 's';
-                container.appendChild(wave);
             }
         }
 
@@ -1084,22 +649,151 @@ Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
         // Executar remoção a cada 200ms
         let brandingRemovalInterval = null;
 
-        // Usar requestIdleCallback para não bloquear o thread principal
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => {
-                createTechBackground();
-            });
-        } else {
-            setTimeout(createTechBackground, 100);
-        }
-
         window.addEventListener('load', function() {
+            createTechBackground();
+            loadAdminSettings(); // Carregar configurações salvas
+            
             // Aguardar Cal.com carregar
             setTimeout(() => {
                 brandingRemovalInterval = setInterval(removeBranding, 200);
                 console.log('✅ Sistema anti-branding ativado');
             }, 2000);
         });
+
+        // ========== FUNÇÕES DO PAINEL ADMIN ==========
+        
+        let clickCount = 0;
+        let clickTimer = null;
+
+        // Triple click no logo para abrir painel admin
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.querySelector('.logo');
+            if (logo) {
+                logo.addEventListener('click', function() {
+                    clickCount++;
+                    
+                    if (clickCount === 1) {
+                        clickTimer = setTimeout(() => {
+                            clickCount = 0;
+                        }, 800);
+                    }
+                    
+                    if (clickCount === 3) {
+                        clearTimeout(clickTimer);
+                        clickCount = 0;
+                        openPasswordModal();
+                    }
+                });
+            }
+        });
+
+        function openPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'block';
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminPassword').focus();
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === '2112') {
+                closePasswordModal();
+                openAdminPanel();
+            } else {
+                alert('❌ Senha incorreta!');
+                document.getElementById('adminPassword').value = '';
+                document.getElementById('adminPassword').focus();
+            }
+        }
+
+        // Enter no campo de senha
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('adminPassword');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+
+        function openAdminPanel() {
+            loadAdminSettings();
+            document.getElementById('adminPanel').style.display = 'block';
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+
+        function loadAdminSettings() {
+            const webhookUrl = localStorage.getItem('webhookUrl') || '';
+            const youtubeUrl = localStorage.getItem('youtubeUrl') || '';
+            const pixelId = localStorage.getItem('pixelId') || '';
+
+            document.getElementById('webhookUrl').value = webhookUrl;
+            document.getElementById('youtubeUrl').value = youtubeUrl;
+            document.getElementById('pixelId').value = pixelId;
+
+            // Carregar vídeo se configurado
+            if (youtubeUrl) {
+                loadYouTubeVideo(youtubeUrl);
+            }
+        }
+
+        function saveAdminSettings() {
+            const webhookUrl = document.getElementById('webhookUrl').value.trim();
+            const youtubeUrl = document.getElementById('youtubeUrl').value.trim();
+            const pixelId = document.getElementById('pixelId').value.trim();
+
+            // Salvar no localStorage
+            localStorage.setItem('webhookUrl', webhookUrl);
+            localStorage.setItem('youtubeUrl', youtubeUrl);
+            localStorage.setItem('pixelId', pixelId);
+
+            // Atualizar vídeo
+            if (youtubeUrl) {
+                loadYouTubeVideo(youtubeUrl);
+            }
+
+            // Reinicializar Meta Pixel se mudou
+            if (pixelId && typeof fbq !== 'undefined') {
+                try {
+                    fbq('init', pixelId);
+                    fbq('track', 'PageView');
+                    console.log('✅ Meta Pixel reinicializado:', pixelId);
+                } catch(e) {
+                    console.error('❌ Erro ao reinicializar pixel:', e);
+                }
+            }
+
+            alert('✅ Configurações salvas com sucesso!\n\n' + 
+                  '🔗 Webhook: ' + (webhookUrl || 'Não configurado') + '\n' +
+                  '📹 YouTube: ' + (youtubeUrl || 'Não configurado') + '\n' +
+                  '📊 Pixel ID: ' + (pixelId || 'Não configurado'));
+            
+            closeAdminPanel();
+        }
+
+        function loadYouTubeVideo(url) {
+            const videoContainer = document.getElementById('videoContainer');
+            if (!videoContainer) return;
+
+            // Verificar se é URL de embed válida
+            if (!url.includes('youtube.com/embed/')) {
+                console.warn('⚠️ URL deve ser do formato: https://www.youtube.com/embed/VIDEO_ID');
+                return;
+            }
+
+            videoContainer.innerHTML = '<iframe src="' + url + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+            console.log('✅ Vídeo carregado:', url);
+        }
+
+        // ========== FIM FUNÇÕES ADMIN ==========
     </script>
 </body>
 </html>
