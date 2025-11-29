@@ -38,31 +38,19 @@
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
         
-        // LIMPEZA AGRESSIVA - Remove QUALQUER valor inválido
-        const PIXEL_ID_CORRETO = '4361448937281110';
-        let currentPixelId = localStorage.getItem('pixelId');
+        // Pegar do localStorage ou usar padrão (SIMPLIFICADO)
+        var pixelID = localStorage.getItem('pixelId') || '4361448937281110';
         
-        // Lista de valores PROIBIDOS que devem ser removidos
-        const valoresInvalidos = ['savedPixelId', 'pixelId', '{metaPixelId}', 'undefined', 'null', ''];
-        
-        // Se for string literal ou inválido, LIMPAR
-        if (!currentPixelId || 
-            valoresInvalidos.includes(currentPixelId) || 
-            currentPixelId.length < 10 ||
-            isNaN(currentPixelId)) {
-            
-            console.warn('⚠️ Pixel ID inválido detectado:', currentPixelId);
-            console.log('🔄 Corrigindo para:', PIXEL_ID_CORRETO);
-            localStorage.setItem('pixelId', PIXEL_ID_CORRETO);
-            currentPixelId = PIXEL_ID_CORRETO;
+        // Se for string literal bugada, corrigir
+        if (pixelID === 'pixelId' || pixelID === 'savedPixelId' || pixelID.length < 10) {
+            pixelID = '4361448937281110';
+            localStorage.setItem('pixelId', pixelID);
         }
         
-        // Usar SEMPRE o valor limpo
-        const pixelIdFinal = currentPixelId;
-        
-        fbq('init', pixelIdFinal);
+        // Inicializar
+        fbq('init', pixelID);
         fbq('track', 'PageView');
-        console.log('✅ Meta Pixel inicializado:', pixelIdFinal);
+        console.log('Meta Pixel ID usado:', pixelID);
     </script>
     <noscript><img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=4361448937281110&ev=PageView&noscript=1"
