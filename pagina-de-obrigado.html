@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Obrigado por agendar sua demonstração com a ADV Funnel">
     <title>Obrigado! - ADV Funnel</title>
+    
+    <!-- Preconnect para melhorar performance -->
+    <link rel="preconnect" href="https://connect.facebook.net">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://lhbwfbquxkutcyqazpnw.supabase.co">
     
     <!-- Meta Pixel Code -->
     <script>
@@ -42,19 +48,28 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #ff7401;
+            --primary-light: #ff9933;
+            --dark: #1a1a1a;
+            --gray: #666;
+            --light-gray: #f5f5f5;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 12px 35px rgba(255, 116, 1, 0.4);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Background animado */
-        #particles-bg {
+        /* Background otimizado com CSS puro */
+        .bg-pattern {
             position: fixed;
             top: 0;
             left: 0;
@@ -62,55 +77,38 @@
             height: 100%;
             z-index: 1;
             pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: rgba(255, 122, 1, 0.4);
-            border-radius: 50%;
-            opacity: 0;
-            animation: float 20s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { 
-                transform: translate(0, 100vh) scale(0.5);
-                opacity: 0;
-            }
-            50% { 
-                transform: translate(var(--x, 20px), 50vh) scale(1.2);
-                opacity: 0.8;
-            }
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 116, 1, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 116, 1, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 116, 1, 0.04) 0%, transparent 80%);
         }
 
         /* Container principal */
-        .container {
+        main {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 2rem 1.25rem;
             position: relative;
             z-index: 10;
         }
 
-        .content-box {
-            background: white;
-            padding: 60px 50px;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        .card {
+            background: #fff;
+            padding: 4rem 3.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
             text-align: center;
-            max-width: 650px;
+            max-width: 600px;
             width: 100%;
-            animation: slideUp 0.8s ease-out;
+            animation: slideUp 0.6s cubic-bezier(0.22, 0.68, 0, 1);
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(40px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -119,109 +117,157 @@
         }
 
         .logo {
-            margin-bottom: 40px;
-            animation: fadeIn 1s ease-out 0.2s both;
+            margin-bottom: 2.5rem;
+            animation: fadeIn 0.8s ease-out 0.1s both;
         }
 
         .logo img {
-            height: 70px;
+            height: 60px;
             width: auto;
-            filter: drop-shadow(0 4px 12px rgba(255, 116, 1, 0.2));
+            filter: drop-shadow(0 2px 8px rgba(255, 116, 1, 0.15));
         }
 
-        .checkmark {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 30px;
-            background: linear-gradient(135deg, #ff7401 0%, #ff9933 100%);
+        .icon-success {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: scaleIn 0.6s ease-out 0.4s both;
-            box-shadow: 0 10px 30px rgba(255, 116, 1, 0.3);
+            animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+            box-shadow: 0 8px 24px rgba(255, 116, 1, 0.25);
         }
 
-        .checkmark::before {
+        .icon-success::before {
             content: '✓';
-            color: white;
-            font-size: 48px;
-            font-weight: bold;
+            color: #fff;
+            font-size: 42px;
+            font-weight: 700;
         }
 
         @keyframes scaleIn {
             from {
-                transform: scale(0);
+                transform: scale(0) rotate(-180deg);
                 opacity: 0;
             }
             to {
-                transform: scale(1);
+                transform: scale(1) rotate(0);
                 opacity: 1;
             }
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 2rem;
             color: #2c2c2c;
-            margin-bottom: 20px;
+            margin-bottom: 1.25rem;
             font-weight: 700;
             line-height: 1.3;
-            animation: fadeIn 1s ease-out 0.6s both;
+            animation: fadeIn 0.8s ease-out 0.5s both;
         }
 
         .subtitle {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 40px;
+            font-size: 1.125rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
             line-height: 1.6;
-            animation: fadeIn 1s ease-out 0.8s both;
+            animation: fadeIn 0.8s ease-out 0.7s both;
         }
 
-        .cta-button {
+        /* Timeline de Lembretes */
+        .timeline {
+            margin: 2.5rem 0;
+            text-align: left;
+            animation: fadeIn 0.8s ease-out 0.9s both;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1.125rem;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            border-radius: 12px;
+            border-left: 3px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(255, 116, 1, 0.1);
+        }
+
+        .timeline-badge {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.375rem;
+            box-shadow: 0 4px 12px rgba(255, 116, 1, 0.2);
+        }
+
+        .timeline-content h3 {
+            font-size: 1rem;
+            color: #2c2c2c;
+            margin-bottom: 0.25rem;
+            font-weight: 700;
+        }
+
+        .timeline-content p {
+            font-size: 0.9375rem;
+            color: var(--gray);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            background: linear-gradient(135deg, #ff7401 0%, #ff9933 100%);
-            color: white;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: #fff;
             text-decoration: none;
-            padding: 18px 45px;
+            padding: 1.125rem 2.75rem;
             border-radius: 50px;
-            font-size: 17px;
+            font-size: 1.0625rem;
             font-weight: 700;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(255, 116, 1, 0.35);
-            animation: fadeIn 1s ease-out 1s both;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 20px rgba(255, 116, 1, 0.3);
+            animation: fadeIn 0.8s ease-out 0.9s both;
+            will-change: transform;
         }
 
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(255, 116, 1, 0.5);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
         }
 
-        .cta-button:active {
-            transform: translateY(-1px);
+        .btn:active {
+            transform: translateY(0);
         }
 
-        .instagram-icon {
-            font-size: 24px;
+        .icon-instagram {
+            font-size: 1.5rem;
+            line-height: 1;
         }
 
-        /* Footer */
+        /* Footer otimizado */
         footer {
-            background: #1a1a1a;
+            background: var(--dark);
             color: #999;
-            padding: 30px 20px;
-            font-size: 13px;
+            padding: 2rem 1.25rem;
+            font-size: 0.8125rem;
             line-height: 1.8;
             text-align: center;
             position: relative;
@@ -229,76 +275,151 @@
         }
 
         footer p {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
         footer strong {
-            color: #ff7401;
+            color: var(--primary);
+            font-weight: 600;
         }
 
-        /* Responsivo */
-        @media (max-width: 768px) {
-            .content-box {
-                padding: 40px 30px;
+        /* Responsivo otimizado */
+        @media (max-width: 640px) {
+            .card {
+                padding: 2.5rem 1.75rem;
+                border-radius: 16px;
             }
 
             .logo img {
-                height: 55px;
+                height: 50px;
             }
 
             h1 {
-                font-size: 26px;
+                font-size: 1.625rem;
             }
 
             .subtitle {
-                font-size: 16px;
+                font-size: 1rem;
             }
 
-            .checkmark {
-                width: 70px;
-                height: 70px;
+            .icon-success {
+                width: 64px;
+                height: 64px;
             }
 
-            .checkmark::before {
-                font-size: 40px;
+            .icon-success::before {
+                font-size: 36px;
             }
 
-            .cta-button {
-                padding: 16px 35px;
-                font-size: 16px;
+            .timeline-item {
+                gap: 0.75rem;
+                padding: 1rem;
+            }
+
+            .timeline-badge {
+                width: 42px;
+                height: 42px;
+                font-size: 1.125rem;
+            }
+
+            .timeline-content h3 {
+                font-size: 0.9375rem;
+            }
+
+            .timeline-content p {
+                font-size: 0.875rem;
+            }
+
+            .btn {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+                width: 100%;
             }
 
             footer {
-                font-size: 12px;
-                padding: 25px 15px;
+                font-size: 0.75rem;
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        /* Otimização de performance */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
 <body>
-    <div id="particles-bg"></div>
+    <div class="bg-pattern"></div>
 
-    <div class="container">
-        <div class="content-box">
+    <main>
+        <article class="card">
             <div class="logo">
-                <img src="https://lhbwfbquxkutcyqazpnw.supabase.co/storage/v1/object/public/images/logo/advfunnel-white.png" alt="ADV Funnel">
+                <img src="https://lhbwfbquxkutcyqazpnw.supabase.co/storage/v1/object/public/images/logo/advfunnel-white.png" alt="ADV Funnel" width="200" height="60">
             </div>
 
-            <div class="checkmark"></div>
+            <div class="icon-success" role="img" aria-label="Sucesso"></div>
 
             <h1>Obrigado por agendar uma demonstração!</h1>
 
             <p class="subtitle">
-                Enviamos um e-mail para você com mais detalhes e confira seu WhatsApp. Até mais!
+                Enviamos um e-mail de confirmação. Agora, prepare-se para receber nossos lembretes inteligentes:
             </p>
 
-            <a href="https://instagram.com/advfunnel" target="_blank" class="cta-button">
-                <span class="instagram-icon">📱</span>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-badge">⚡</div>
+                    <div class="timeline-content">
+                        <h3>Agora (5 minutos)</h3>
+                        <p>Confirmação imediata no WhatsApp</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-badge">📅</div>
+                    <div class="timeline-content">
+                        <h3>24h antes</h3>
+                        <p>Primeiro lembrete da sua reunião</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-badge">🌅</div>
+                    <div class="timeline-content">
+                        <h3>8h da manhã</h3>
+                        <p>Lembrete matinal no dia da reunião</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-badge">⏰</div>
+                    <div class="timeline-content">
+                        <h3>1h30 antes</h3>
+                        <p>Preparação final para a demonstração</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-badge">🎯</div>
+                    <div class="timeline-content">
+                        <h3>10 minutos antes</h3>
+                        <p>Último lembrete + link de acesso</p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://instagram.com/advfunnel" target="_blank" rel="noopener noreferrer" class="btn">
+                <span class="icon-instagram" aria-hidden="true">📱</span>
                 Siga a AdvFunnel no Instagram
             </a>
-        </div>
-    </div>
+        </article>
+    </main>
 
     <footer>
         <p>
@@ -308,25 +429,5 @@
             Não enviamos spam e você pode entrar em contato conosco para tirar dúvidas através do nosso canal de suporte oficial: (71) 98243-8929, de segunda a sexta, das 09h00 às 18h.
         </p>
     </footer>
-
-    <script>
-        // Criar partículas animadas
-        function createParticles() {
-            const container = document.getElementById('particles-bg');
-            const particleCount = window.innerWidth <= 768 ? 20 : 40;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 10 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                particle.style.setProperty('--x', (Math.random() * 100 - 50) + 'px');
-                container.appendChild(particle);
-            }
-        }
-
-        window.addEventListener('load', createParticles);
-    </script>
 </body>
 </html>
