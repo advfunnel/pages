@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADV Funnel - IA Generativa de Graça</title>
     
+    <!-- Preconnect para performance -->
+    <link rel="preconnect" href="https://app.cal.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+    <link rel="preconnect" href="https://lhbwfbquxkutcyqazpnw.supabase.co" crossorigin>
+    
+    <!-- Preload imagens críticas -->
+    <link rel="preload" as="image" href="https://lhbwfbquxkutcyqazpnw.supabase.co/storage/v1/object/public/images/logo/advfunnel-white.png" fetchpriority="high">
+    <link rel="preload" as="image" href="https://lhbwfbquxkutcyqazpnw.supabase.co/storage/v1/object/public/images/outro/jessica.webp">
+    
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKZGV7YN84"></script>
     <script>
@@ -12,17 +22,6 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-QKZGV7YN84');
-    </script>
-    
-    <!-- LIMPEZA FORÇADA -->
-    <script>
-        // Limpar localStorage SEMPRE ao carregar
-        if (!sessionStorage.getItem('cleaned')) {
-            localStorage.removeItem('pixelId');
-            localStorage.removeItem('ga4Id');
-            sessionStorage.setItem('cleaned', 'true');
-            console.log('🧹 localStorage limpo');
-        }
     </script>
     
     <!-- Meta Pixel Code -->
@@ -42,7 +41,6 @@
     <noscript><img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=4361448937281110&ev=PageView&noscript=1"
     /></noscript>
-    <!-- End Meta Pixel Code -->
     
     <style>
         * {
@@ -50,7 +48,6 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: #e8e8e8;
@@ -59,7 +56,6 @@
             position: relative;
             overflow-x: hidden;
         }
-
         #tech-bg {
             position: fixed;
             top: 0;
@@ -70,13 +66,11 @@
             pointer-events: none;
             overflow: hidden;
         }
-
         .tech-element {
             position: absolute;
             opacity: 0;
             z-index: 1;
         }
-
         .binary {
             font-family: 'Courier New', monospace;
             font-size: 16px;
@@ -84,33 +78,19 @@
             font-weight: 400;
             animation: floatUp 25s infinite ease-in-out;
         }
-
         .tech-icon {
             font-size: 28px;
             color: rgba(255, 116, 1, 0.3);
             animation: floatUpRotate 30s infinite ease-in-out;
         }
-
         .geo-shape {
             width: 50px;
             height: 50px;
             border: 3px solid rgba(255, 116, 1, 0.25);
             animation: floatUpScale 28s infinite ease-in-out;
         }
-
         .circle { border-radius: 50%; }
         .square { border-radius: 4px; }
-
-        .triangle {
-            width: 0;
-            height: 0;
-            border-left: 25px solid transparent;
-            border-right: 25px solid transparent;
-            border-bottom: 40px solid rgba(255, 116, 1, 0.2);
-            border-top: none;
-            animation: floatUpRotate 26s infinite ease-in-out;
-        }
-
         .soft-particle {
             width: 8px;
             height: 8px;
@@ -119,21 +99,18 @@
             filter: blur(0.5px);
             animation: floatUp 22s infinite ease-in-out;
         }
-
         @keyframes floatUp {
             0% { transform: translateY(100vh) translateX(0); opacity: 0; }
             5% { opacity: 0.8; }
             90% { opacity: 0.8; }
             100% { transform: translateY(-5vh) translateX(var(--drift, 20px)); opacity: 0; }
         }
-
         @keyframes floatUpRotate {
             0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
             5% { opacity: 0.7; }
             90% { opacity: 0.7; }
             100% { transform: translateY(-5vh) translateX(var(--drift, 30px)) rotate(360deg); opacity: 0; }
         }
-
         @keyframes floatUpScale {
             0% { transform: translateY(100vh) translateX(0) scale(0.8); opacity: 0; }
             5% { opacity: 0.6; }
@@ -141,14 +118,12 @@
             90% { opacity: 0.6; }
             100% { transform: translateY(-5vh) translateX(var(--drift, 25px)) scale(0.8); opacity: 0; }
         }
-
         .container {
-            max-width: 680px;
+            max-width: 800px;
             margin: 0 auto;
             position: relative;
             z-index: 10;
         }
-
         .header {
             text-align: center;
             padding: 30px 20px 40px;
@@ -156,87 +131,108 @@
             position: relative;
             z-index: 10;
         }
-
         .logo {
             display: inline-block;
-            cursor: pointer;
-            transition: all 0.3s ease;
             filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.1));
             user-select: none;
         }
-
-        .logo:hover {
-            transform: scale(1.05);
-            filter: drop-shadow(0 6px 20px rgba(255, 116, 1, 0.25));
-        }
-
         .logo img {
             height: 60px;
             display: block;
         }
 
-        .message-box {
-            background: white;
-            padding: 4px 18px 0px 18px !important;
-            border-radius: 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
-            transition: box-shadow 0.3s ease;
+        /* Estilo WhatsApp Messages */
+        .messages {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 30px;
         }
 
-        .message-box p {
-            margin: 0 !important;
-            padding: 0 !important;
+        .message {
+            display: flex;
+            gap: 14px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.6s ease forwards;
+            contain: layout style paint;
         }
 
-        .message-left {
-            margin-right: 50px;
-            border-top-left-radius: 6px;
+        .message:nth-child(1) { animation-delay: 0.5s; }
+        .message:nth-child(2) { animation-delay: 2.5s; }
+        .message:nth-child(3) { animation-delay: 4.5s; }
+        .message:nth-child(4) { animation-delay: 6.5s; }
+
+        .avatar {
+            flex-shrink: 0;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background-image: url('https://lhbwfbquxkutcyqazpnw.supabase.co/storage/v1/object/public/images/outro/jessica.webp');
+            background-size: 140%;
+            background-position: center 30%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08),
+                        0 4px 16px rgba(0, 0, 0, 0.04);
+            border: 2.5px solid #ffffff;
+            content-visibility: auto;
         }
 
-        .message-left:hover,
-        .message-right:hover {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+        .message-content {
+            flex: 1;
         }
 
-        .message-right {
-            margin-left: 50px;
-            background: #dcf8c6;
-            border-top-right-radius: 6px;
+        .bubble {
+            background: #ffffff;
+            padding: 18px 22px;
+            border-radius: 18px;
+            border-top-left-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 
+                        0 4px 16px rgba(0, 0, 0, 0.04),
+                        0 8px 24px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.04);
         }
 
-        .headline-text {
-            font-size: 18px !important;
-            font-weight: 400 !important;
-            color: #1a1a1a !important;
-            line-height: 1.3 !important;
-            margin: 0 !important;
-            padding: 0 !important;
+        .bubble p {
+            color: #1e293b;
+            font-size: 16px;
+            line-height: 1.65;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            margin: 0;
         }
 
-        .subheadline-text {
-            font-size: 16px !important;
-            font-weight: 400 !important;
-            color: #2c2c2c !important;
-            line-height: 1.4 !important;
-            margin: 0 !important;
-            padding: 0 !important;
+        .bubble strong {
+            font-weight: 600;
         }
 
         .timestamp {
-            font-size: 11px !important;
-            color: rgba(0, 0, 0, 0.45) !important;
             text-align: right;
-            margin: 0 !important;
-            padding: 3px 0 !important;
+            margin-top: 6px;
+            padding-right: 4px;
+            font-size: 11px;
+            color: #94a3b8;
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
         }
 
-        .video-box {
-            background: white;
-            padding: 12px;
-            border-radius: 16px;
-            margin-bottom: 60px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+        .message:nth-child(1) .timestamp { animation-delay: 1.0s; }
+        .message:nth-child(2) .timestamp { animation-delay: 3.0s; }
+        .message:nth-child(3) .timestamp { animation-delay: 5.0s; }
+        .message:nth-child(4) .timestamp { animation-delay: 7.0s; }
+
+        .checkmark {
+            display: inline-block;
+            margin-left: 4px;
+            color: #60a5fa;
+            font-weight: 600;
+        }
+
+        /* Vídeo */
+        .video-container {
+            margin: 40px 0;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+            animation-delay: 8.5s;
         }
 
         .video-wrapper {
@@ -244,8 +240,9 @@
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            border-radius: 12px;
-            background: #000;
+            border-radius: 16px;
+            background: #000000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
         }
 
         .video-wrapper iframe {
@@ -254,6 +251,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            border: none;
         }
 
         .video-placeholder {
@@ -262,566 +260,234 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            color: #888;
-        }
-
-        .admin-panel {
-            display: none;
-            position: fixed;
-            z-index: 3000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-        }
-
-        .admin-content {
-            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
-            margin: 50px auto;
-            padding: 45px;
-            border-radius: 24px;
-            width: 90%;
-            max-width: 650px;
-            box-shadow: 0 20px 80px rgba(255, 116, 1, 0.4);
-            border: 3px solid #ff7401;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        .admin-content h2 {
-            color: #ff7401;
-            margin-bottom: 35px;
-            font-size: 26px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .admin-group {
-            margin-bottom: 28px;
-        }
-
-        .admin-group label {
-            display: block;
-            margin-bottom: 10px;
-            color: #ff7401;
-            font-weight: 700;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .admin-group input {
-            width: 100%;
-            padding: 16px;
-            font-size: 14px;
-            border: 2px solid #444;
-            border-radius: 12px;
-            background: #0f0f0f;
-            color: #ffffff;
-            transition: all 0.3s ease;
-            font-family: 'Courier New', monospace;
-        }
-
-        .admin-group input:focus {
-            outline: none;
-            border-color: #ff7401;
-            box-shadow: 0 0 25px rgba(255, 116, 1, 0.3);
-            background: #1a1a1a;
-        }
-
-        .admin-buttons {
-            display: flex;
-            gap: 18px;
-            margin-top: 35px;
-        }
-
-        .admin-save, .admin-close {
-            flex: 1;
-            padding: 16px;
-            font-size: 15px;
-            font-weight: 700;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .admin-save {
-            background: linear-gradient(135deg, #ff7401 0%, #ff9933 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 116, 1, 0.4);
-        }
-
-        .admin-save:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 116, 1, 0.6);
-        }
-
-        .admin-close {
-            background: #333;
-            color: #fff;
-        }
-
-        .admin-close:hover {
-            background: #444;
-            transform: translateY(-3px);
-        }
-
-        .password-modal {
-            display: none;
-            position: fixed;
-            z-index: 2500;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-        }
-
-        .password-content {
-            background: white;
-            margin: 200px auto;
-            padding: 45px;
-            border-radius: 24px;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
-            text-align: center;
-        }
-
-        .password-content h3 {
-            color: #2c2c2c;
-            margin-bottom: 30px;
-            font-size: 22px;
-        }
-
-        .password-content input {
-            width: 100%;
-            padding: 18px;
-            font-size: 24px;
-            border: 3px solid #e0e0e0;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 25px;
-            letter-spacing: 12px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .password-content input:focus {
-            outline: none;
-            border-color: #ff7401;
-            box-shadow: 0 0 0 5px rgba(255, 116, 1, 0.15);
-        }
-
-        .password-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .password-buttons button {
-            flex: 1;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .password-submit {
-            background: #ff7401;
-            color: white;
-        }
-
-        .password-submit:hover {
-            background: #ff8820;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 116, 1, 0.4);
-        }
-
-        .password-cancel {
-            background: #e0e0e0;
             color: #666;
+            font-size: 14px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
         }
 
-        .password-cancel:hover {
-            background: #d0d0d0;
+        /* Botão de Agendamento */
+        .cta-container {
+            margin-top: 40px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+            animation-delay: 9.5s;
+        }
+
+        .btn-agendar {
+            background: linear-gradient(135deg, #ff7a01, #ff9a33);
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(255, 122, 1, 0.3);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            -webkit-tap-highlight-color: transparent;
+            animation: pulse-elegant 2s ease-in-out infinite;
+            animation-delay: 10.5s;
+        }
+
+        @keyframes pulse-elegant {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 8px 24px rgba(255, 122, 1, 0.3);
+            }
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 12px 32px rgba(255, 122, 1, 0.45);
+            }
+        }
+
+        .btn-agendar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(255, 122, 1, 0.4);
+        }
+
+        .btn-agendar:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 16px rgba(255, 122, 1, 0.3);
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 768px) {
             body { padding: 15px 10px; }
-            .headline-text { font-size: 17px !important; }
-            .subheadline-text { font-size: 15px !important; }
-            .message-box { 
-                padding: 4px 16px 0px 16px !important; 
-                margin-bottom: 14px; 
-            }
-            .message-left { margin-right: 35px; }
-            .message-right { margin-left: 35px; }
             .logo img { height: 50px; }
+            .avatar {
+                width: 42px;
+                height: 42px;
+            }
+            .bubble {
+                padding: 16px 18px;
+            }
+            .bubble p {
+                font-size: 15px;
+            }
+            .messages {
+                gap: 20px;
+            }
+            .btn-agendar {
+                font-size: 16px;
+                padding: 18px 40px;
+            }
         }
     </style>
 </head>
 <body>
     <div id="tech-bg"></div>
-
     <div class="header">
         <div class="logo">
             <img src="https://lhbwfbquxkutcyqazpnw.supabase.co/storage/v1/object/public/images/logo/advfunnel-white.png" alt="ADV Funnel">
         </div>
     </div>
-
     <div class="container">
-        <div class="message-box message-left">
-            <p class="headline-text">
-                Nós vamos desenvolver SUA IA GENERATIVA DE <strong>GRAÇA! PAGUE SE GOSTAR!</strong>
-            </p>
-            <div class="timestamp">Agora</div>
+        <div class="messages">
+            <div class="message">
+                <div class="avatar"></div>
+                <div class="message-content">
+                    <div class="bubble">
+                        <p>Nós vamos desenvolver <strong>SUA IA GENERATIVA DE GRAÇA! PAGUE SE GOSTAR!</strong></p>
+                    </div>
+                    <div class="timestamp">Agora <span class="checkmark">✓</span></div>
+                </div>
+            </div>
+
+            <div class="message">
+                <div class="avatar"></div>
+                <div class="message-content">
+                    <div class="bubble">
+                        <p>Desenvolvemos <strong>mais de 100 soluções com IA e Automação</strong> para <strong>mais de 400 negócios</strong>.</p>
+                    </div>
+                    <div class="timestamp">Agora <span class="checkmark">✓</span></div>
+                </div>
+            </div>
+
+            <div class="message">
+                <div class="avatar"></div>
+                <div class="message-content">
+                    <div class="bubble">
+                        <p>Quer entender qual solução você pode aplicar na prática que vai te ajudar a <strong>aumentar as vendas, reduzir custo e aumentar a receita</strong>?</p>
+                    </div>
+                    <div class="timestamp">Agora <span class="checkmark">✓</span></div>
+                </div>
+            </div>
+
+            <div class="message">
+                <div class="avatar"></div>
+                <div class="message-content">
+                    <div class="bubble">
+                        <p>Assista ao vídeo e agende seu horário com nosso time de especialistas.</p>
+                    </div>
+                    <div class="timestamp">Agora <span class="checkmark">✓</span></div>
+                </div>
+            </div>
         </div>
 
-        <div class="message-box message-right">
-            <p class="subheadline-text">
-                Desenvolvemos <strong>mais de 100 soluções com IA e Automação</strong> para <strong>mais de 400 negócios</strong>, quer entender qual solução você pode aplicar na prática que vai te ajudar a <strong>aumentar as vendas, reduzir custo e aumentar a receita</strong>? Assista ao vídeo e agende seu horário.
-            </p>
-            <div class="timestamp">Agora</div>
-        </div>
-
-        <!-- VÍDEO -->
-        <div class="video-box">
-            <div class="video-wrapper" id="videoContainer">
+        <!-- Vídeo -->
+        <div class="video-container">
+            <div class="video-wrapper" id="videoWrapper">
                 <div class="video-placeholder">Carregando vídeo...</div>
             </div>
         </div>
-    </div>
 
-    <div id="passwordModal" class="password-modal">
-        <div class="password-content">
-            <h3>🔐 Área Administrativa</h3>
-            <input type="password" id="adminPassword" placeholder="••••" maxlength="4">
-            <div class="password-buttons">
-                <button class="password-cancel" onclick="closePasswordModal()">Cancelar</button>
-                <button class="password-submit" onclick="checkPassword()">Entrar</button>
-            </div>
+        <!-- Botão de Agendamento -->
+        <div class="cta-container">
+            <button 
+                class="btn-agendar" 
+                data-cal-link="advanx/iahumanizada"
+                data-cal-namespace="iahumanizada"
+                data-cal-config='{"layout":"month_view"}'>
+                AGENDAR MINHA APRESENTAÇÃO
+            </button>
         </div>
     </div>
 
-    <div id="adminPanel" class="admin-panel">
-        <div class="admin-content">
-            <h2>⚙️ Configurações</h2>
-            
-            <div class="admin-group">
-                <label>🔗 Webhook URL</label>
-                <input type="url" id="webhookUrl" placeholder="https://seu-webhook.com/endpoint">
-            </div>
-            
-            <div class="admin-group">
-                <label>📹 Link do YouTube (embed)</label>
-                <input type="url" id="youtubeUrl" placeholder="https://www.youtube.com/embed/VIDEO_ID">
-            </div>
-            
-            <div class="admin-group">
-                <label>📊 Facebook Pixel ID (FIXO)</label>
-                <input type="text" id="pixelId" placeholder="4361448937281110" readonly style="background: #1a1a1a; cursor: not-allowed;">
-            </div>
-
-            <div class="admin-group">
-                <label>🔑 Meta Conversion API Token</label>
-                <input type="text" id="metaToken" placeholder="Token para Conversions API (backend)">
-            </div>
-
-            <div class="admin-group">
-                <label>📈 Google Analytics 4 ID (FIXO)</label>
-                <input type="text" id="ga4Id" placeholder="G-QKZGV7YN84" readonly style="background: #1a1a1a; cursor: not-allowed;">
-            </div>
-            
-            <div class="admin-buttons">
-                <button class="admin-close" onclick="closeAdminPanel()">Cancelar</button>
-                <button class="admin-save" onclick="saveAdminSettings()">Salvar Alterações</button>
-            </div>
-
-            <div style="margin-top: 25px; padding-top: 25px; border-top: 2px solid #444; text-align: center;">
-                <button onclick="clearAllSettings()" style="background: #d32f2f; color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 13px;">
-                    🗑️ LIMPAR TODAS CONFIGURAÇÕES
-                </button>
-                <p style="color: #888; font-size: 11px; margin-top: 10px;">Volta aos valores padrão</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cal.com FLOATING BUTTON -->
+    <!-- Cal element-click embed code begins -->
     <script type="text/javascript">
       (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
-      Cal.ns.iahumanizada("floatingButton", {"calLink":"advanx/iahumanizada","config":{"layout":"month_view"},"buttonText":"AGENDAR MINHA APRESENTAÇÃO","hideButtonIcon":false,"buttonColor":"#ff7a01"}); 
-      Cal.ns.iahumanizada("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#ff7a01"},"dark":{"cal-brand":"#ff7a01"}},"hideEventTypeDetails":true,"layout":"month_view"});
+    Cal("init", "iahumanizada", {origin:"https://app.cal.com"});
+      
+    Cal.ns.iahumanizada("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#ff7a01"},"dark":{"cal-brand":"#ff7a01"}},"hideEventTypeDetails":false,"layout":"month_view"});
     </script>
+    <!-- Cal element-click embed code ends -->
 
     <script>
         function createTechBackground() {
             const container = document.getElementById('tech-bg');
-            const binaryChars = ['0', '1', '0', '1', '01', '10', '001', '101', '010'];
+            const binaryChars = ['0', '1', '01', '10', '001', '101', '010'];
             const techIcons = ['⟨⟩', '{ }', '< /', '>', '▲', '◆', '●', '■'];
+            const fragment = document.createDocumentFragment();
             
+            // Binary elements (otimizado)
             for (let i = 0; i < 30; i++) {
                 const binary = document.createElement('div');
                 binary.className = 'tech-element binary';
                 binary.textContent = binaryChars[Math.floor(Math.random() * binaryChars.length)].repeat(Math.floor(Math.random() * 3) + 1);
-                binary.style.left = Math.random() * 100 + '%';
-                
-                if (i < 10) {
-                    binary.style.bottom = (Math.random() * 80 + 10) + '%';
-                    binary.style.animationDelay = '0s';
-                    binary.style.opacity = '0.8';
-                } else {
-                    binary.style.bottom = '-50px';
-                    binary.style.animationDelay = Math.random() * 10 + 's';
-                }
-                
-                binary.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
-                container.appendChild(binary);
+                binary.style.cssText = `left:${Math.random() * 100}%;bottom:${i < 10 ? Math.random() * 80 + 10 : -50}%;animation-delay:${i < 10 ? 0 : Math.random() * 10}s;--drift:${Math.random() * 60 - 30}px;opacity:${i < 10 ? 0.8 : 0}`;
+                fragment.appendChild(binary);
             }
-
+            
+            // Tech icons (otimizado)
             for (let i = 0; i < 25; i++) {
                 const icon = document.createElement('div');
                 icon.className = 'tech-element tech-icon';
                 icon.textContent = techIcons[Math.floor(Math.random() * techIcons.length)];
-                icon.style.left = Math.random() * 100 + '%';
-                
-                if (i < 8) {
-                    icon.style.bottom = (Math.random() * 80 + 10) + '%';
-                    icon.style.animationDelay = '0s';
-                    icon.style.opacity = '0.7';
-                } else {
-                    icon.style.bottom = '-50px';
-                    icon.style.animationDelay = Math.random() * 12 + 's';
-                }
-                
-                icon.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
-                container.appendChild(icon);
+                icon.style.cssText = `left:${Math.random() * 100}%;bottom:${i < 8 ? Math.random() * 80 + 10 : -50}%;animation-delay:${i < 8 ? 0 : Math.random() * 12}s;--drift:${Math.random() * 80 - 40}px;opacity:${i < 8 ? 0.7 : 0}`;
+                fragment.appendChild(icon);
             }
-
+            
+            // Shapes (otimizado)
             const shapes = ['circle', 'square'];
             for (let i = 0; i < 20; i++) {
                 const shape = document.createElement('div');
-                shape.className = 'tech-element geo-shape ' + shapes[Math.floor(Math.random() * shapes.length)];
-                shape.style.left = Math.random() * 100 + '%';
-                
-                if (i < 6) {
-                    shape.style.bottom = (Math.random() * 80 + 10) + '%';
-                    shape.style.animationDelay = '0s';
-                    shape.style.opacity = '0.6';
-                } else {
-                    shape.style.bottom = '-50px';
-                    shape.style.animationDelay = Math.random() * 10 + 's';
-                }
-                
-                shape.style.setProperty('--drift', (Math.random() * 50 - 25) + 'px');
-                container.appendChild(shape);
+                shape.className = `tech-element geo-shape ${shapes[Math.floor(Math.random() * shapes.length)]}`;
+                shape.style.cssText = `left:${Math.random() * 100}%;bottom:${i < 6 ? Math.random() * 80 + 10 : -50}%;animation-delay:${i < 6 ? 0 : Math.random() * 10}s;--drift:${Math.random() * 50 - 25}px;opacity:${i < 6 ? 0.6 : 0}`;
+                fragment.appendChild(shape);
             }
-
+            
+            // Particles (otimizado)
             for (let i = 0; i < 40; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'tech-element soft-particle';
-                particle.style.left = Math.random() * 100 + '%';
-                
-                if (i < 15) {
-                    particle.style.bottom = (Math.random() * 80 + 10) + '%';
-                    particle.style.animationDelay = '0s';
-                    particle.style.opacity = '0.8';
-                } else {
-                    particle.style.bottom = '-20px';
-                    particle.style.animationDelay = Math.random() * 8 + 's';
-                }
-                
-                particle.style.setProperty('--drift', (Math.random() * 40 - 20) + 'px');
-                container.appendChild(particle);
+                particle.style.cssText = `left:${Math.random() * 100}%;bottom:${i < 15 ? Math.random() * 80 + 10 : -20}%;animation-delay:${i < 15 ? 0 : Math.random() * 8}s;--drift:${Math.random() * 40 - 20}px;opacity:${i < 15 ? 0.8 : 0}`;
+                fragment.appendChild(particle);
             }
+            
+            container.appendChild(fragment);
         }
 
-        // Remover branding Cal.com agressivamente
-        function removeBranding() {
-            const calEmbed = document.querySelector('.cal-embed');
-            if (!calEmbed) return;
-
-            // Encontrar e esconder TUDO que tenha "cal.com" no texto
-            const allElements = calEmbed.querySelectorAll('*');
-            allElements.forEach(el => {
-                const text = (el.textContent || '').toLowerCase();
-                const isLink = el.tagName === 'A' && (el.href || '').includes('cal.com');
-                
-                if (text.includes('cal.com') || text.includes('powered by') || isLink) {
-                    el.style.cssText = 'display: none !important; opacity: 0 !important; height: 0 !important; visibility: hidden !important;';
-                    
-                    // Esconder o pai também
-                    if (el.parentElement) {
-                        const parentText = (el.parentElement.textContent || '').toLowerCase();
-                        if (parentText.includes('cal.com')) {
-                            el.parentElement.style.cssText = 'display: none !important; opacity: 0 !important; height: 0 !important;';
-                        }
-                    }
-                }
-            });
-        }
-
-        // Executar remoção a cada 200ms
-        let brandingRemovalInterval = null;
-
+        // Carregar tudo de forma otimizada
         window.addEventListener('load', function() {
             createTechBackground();
-            loadAdminSettings(); // Carregar configurações salvas
-            
-            // Aguardar Cal.com carregar
-            setTimeout(() => {
-                brandingRemovalInterval = setInterval(removeBranding, 200);
-                console.log('✅ Sistema anti-branding ativado');
-            }, 2000);
+            loadVideo();
         });
 
-        // ========== FUNÇÕES DO PAINEL ADMIN ==========
-        
-        let clickCount = 0;
-        let clickTimer = null;
-
-        // Triple click no logo para abrir painel admin
-        document.addEventListener('DOMContentLoaded', function() {
-            const logo = document.querySelector('.logo');
-            if (logo) {
-                logo.addEventListener('click', function() {
-                    clickCount++;
-                    
-                    if (clickCount === 1) {
-                        clickTimer = setTimeout(() => {
-                            clickCount = 0;
-                        }, 800);
-                    }
-                    
-                    if (clickCount === 3) {
-                        clearTimeout(clickTimer);
-                        clickCount = 0;
-                        openPasswordModal();
-                    }
-                });
-            }
-        });
-
-        function openPasswordModal() {
-            document.getElementById('passwordModal').style.display = 'block';
-            document.getElementById('adminPassword').value = '';
-            document.getElementById('adminPassword').focus();
-        }
-
-        function closePasswordModal() {
-            document.getElementById('passwordModal').style.display = 'none';
-        }
-
-        function checkPassword() {
-            const password = document.getElementById('adminPassword').value;
-            if (password === '2112') {
-                closePasswordModal();
-                openAdminPanel();
-            } else {
-                alert('❌ Senha incorreta!');
-                document.getElementById('adminPassword').value = '';
-                document.getElementById('adminPassword').focus();
-            }
-        }
-
-        // Enter no campo de senha
-        document.addEventListener('DOMContentLoaded', function() {
-            const passwordInput = document.getElementById('adminPassword');
-            if (passwordInput) {
-                passwordInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        checkPassword();
-                    }
-                });
-            }
-        });
-
-        function openAdminPanel() {
-            loadAdminSettings();
-            document.getElementById('adminPanel').style.display = 'block';
-        }
-
-        function closeAdminPanel() {
-            document.getElementById('adminPanel').style.display = 'none';
-        }
-
-        function loadAdminSettings() {
-            const webhookUrl = localStorage.getItem('webhookUrl') || '';
-            const youtubeUrl = localStorage.getItem('youtubeUrl') || '';
-            const metaToken = localStorage.getItem('metaToken') || '';
-
-            document.getElementById('webhookUrl').value = webhookUrl;
-            document.getElementById('youtubeUrl').value = youtubeUrl;
-            document.getElementById('pixelId').value = '4361448937281110';
-            document.getElementById('metaToken').value = metaToken;
-            document.getElementById('ga4Id').value = 'G-QKZGV7YN84';
-
-            // Carregar vídeo se configurado
+        function loadVideo() {
+            const youtubeUrl = localStorage.getItem('youtubeUrl');
             if (youtubeUrl) {
-                loadYouTubeVideo(youtubeUrl);
+                const videoWrapper = document.getElementById('videoWrapper');
+                if (videoWrapper && youtubeUrl.includes('youtube.com/embed/')) {
+                    videoWrapper.innerHTML = `<iframe src="${youtubeUrl}?modestbranding=1&rel=0&fs=0&disablekb=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+                }
             }
         }
-
-        function saveAdminSettings() {
-            const webhookUrl = document.getElementById('webhookUrl').value.trim();
-            const youtubeUrl = document.getElementById('youtubeUrl').value.trim();
-            const metaToken = document.getElementById('metaToken').value.trim();
-
-            // Salvar apenas webhook, youtube e token (NÃO pixel e GA4)
-            localStorage.setItem('webhookUrl', webhookUrl);
-            localStorage.setItem('youtubeUrl', youtubeUrl);
-            localStorage.setItem('metaToken', metaToken);
-
-            // Atualizar vídeo
-            if (youtubeUrl) {
-                loadYouTubeVideo(youtubeUrl);
-            }
-
-            alert('✅ Configurações salvas!\n\n' + 
-                  '🔗 Webhook: ' + (webhookUrl || 'Não configurado') + '\n' +
-                  '📹 YouTube: ' + (youtubeUrl || 'Não configurado') + '\n' +
-                  '🔑 Meta Token: ' + (metaToken ? 'Configurado' : 'Não configurado') + '\n\n' +
-                  '⚠️ Pixel e GA4 são fixos (hard-coded)');
-            
-            closeAdminPanel();
-        }
-
-        function loadYouTubeVideo(url) {
-            const videoContainer = document.getElementById('videoContainer');
-            if (!videoContainer) return;
-
-            // Verificar se é URL de embed válida
-            if (!url.includes('youtube.com/embed/')) {
-                console.warn('⚠️ URL deve ser do formato: https://www.youtube.com/embed/VIDEO_ID');
-                return;
-            }
-
-            videoContainer.innerHTML = '<iframe src="' + url + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-            console.log('✅ Vídeo carregado:', url);
-        }
-
-        function clearAllSettings() {
-            if (confirm('⚠️ TEM CERTEZA?\n\nIsso vai apagar TODAS as configurações e voltar aos valores padrão!\n\nWebhook, YouTube, Pixel ID, Token, GA4 - TUDO será resetado.')) {
-                localStorage.clear();
-                alert('✅ Configurações limpas!\n\nRecarregando página...');
-                location.reload();
-            }
-        }
-
-        // ========== FIM FUNÇÕES ADMIN ==========
     </script>
 </body>
 </html>
