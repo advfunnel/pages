@@ -452,6 +452,13 @@ const state = {
     email: '',
     site: '',
     pricing: ''
+  },
+  utm: {
+    source: '',
+    medium: '',
+    campaign: '',
+    term: '',
+    content: ''
   }
 };
 
@@ -531,10 +538,27 @@ const phoneWarning = document.getElementById('phoneWarning');
 const emailWarning = document.getElementById('emailWarning');
 
 // ========================================
+// CAPTURA UTMs DA URL
+// ========================================
+function captureUTMs() {
+  const urlParams = new URLSearchParams(window.location.search);
+  state.utm.source = urlParams.get('utm_source') || '';
+  state.utm.medium = urlParams.get('utm_medium') || '';
+  state.utm.campaign = urlParams.get('utm_campaign') || '';
+  state.utm.term = urlParams.get('utm_term') || '';
+  state.utm.content = urlParams.get('utm_content') || '';
+  
+  console.log('📊 UTMs capturadas:', state.utm);
+}
+
+// Captura UTMs assim que a página carregar
+captureUTMs();
+
+// ========================================
 // WEBHOOK - Cole sua URL aqui
 // ========================================
 async function sendToWebhook() {
-  const WEBHOOK_URL = 'https://n8n.advfunnel.com.br/webhook/cb33d994-f6ab-446a-9ba7-fc6f4fd24e0e/:leads'; // ← COLE SUA URL AQUI
+  const WEBHOOK_URL = 'https://seu-webhook.com/endpoint'; // ← COLE SUA URL AQUI
   
   const data = {
     name: state.data.name,
@@ -542,6 +566,11 @@ async function sendToWebhook() {
     email: state.data.email,
     site: state.data.site,
     pricing: state.data.pricing,
+    utm_source: state.utm.source,
+    utm_medium: state.utm.medium,
+    utm_campaign: state.utm.campaign,
+    utm_term: state.utm.term,
+    utm_content: state.utm.content,
     timestamp: new Date().toISOString()
   };
   
@@ -1003,10 +1032,26 @@ INSTRUÇÕES RÁPIDAS:
 
 2. WEBHOOK:
    - Busque "WEBHOOK_URL" e cole sua URL
-   - Telefone enviado: 5571XXXXXXXXX (DDI+DDD+número)
+   - Telefone: 5571XXXXXXXXX (DDI+DDD+número)
+   - UTMs: Capturadas automaticamente da URL
 
 3. WHATSAPP:
    - Busque "wa.me/" e coloque seu número
+
+📊 DADOS ENVIADOS NO WEBHOOK:
+{
+  "name": "Nome",
+  "phone": "5571992894634",
+  "email": "email@exemplo.com",
+  "site": "https://instagram.com/usuario",
+  "pricing": "Se trouxer resultado, posso investir",
+  "utm_source": "facebook",
+  "utm_medium": "cpc",
+  "utm_campaign": "campanha-teste",
+  "utm_term": "termo",
+  "utm_content": "anuncio1",
+  "timestamp": "2026-01-11T23:00:00.000Z"
+}
 
 PRONTO! 🚀
 ========================================
